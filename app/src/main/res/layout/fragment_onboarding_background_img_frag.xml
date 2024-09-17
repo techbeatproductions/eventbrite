@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".onboarding_background_img_frag">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/onboarding_img_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            android:contentDescription="@string/onboarding_image_view"
+            android:elevation="0dp"
+            android:src="@drawable/onboarding1_bg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="520dp"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="@android:color/transparent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/rounded_card"
+                android:backgroundTint="@color/eventbrite_card_blue">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cardConstraintLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:ignore="UselessParent">
+
+                    <TextView
+                        android:id="@+id/onboardingFragCardTv1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="52dp"
+                        android:layout_marginTop="32dp"
+                        android:layout_marginEnd="52dp"
+                        android:fontFamily="@font/airbnb_cereal_w_bd"
+                        android:text="@string/explore_upcoming_and_nearby_events"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="22sp"
+                        app:layout_constraintEnd_toStartOf="@+id/guideline4"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="@+id/guideline3"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/onboardingFragCardTv2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="52dp"
+                        android:layout_marginTop="48dp"
+                        android:layout_marginEnd="52dp"
+                        android:fontFamily="@font/airbnb_cereal_w_bk"
+                        android:text="@string/in_publishing_and_graphic_design"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        app:layout_constraintEnd_toStartOf="@+id/guideline4"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="@+id/guideline3"
+                        app:layout_constraintTop_toBottomOf="@+id/onboardingFragCardTv1" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_begin="52dp" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_end="52dp" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintGuide_begin="240dp" />
+
+                    <TextView
+                        android:id="@+id/onboardingFragSkipClickableTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:fontFamily="@font/airbnb_cereal_w_bk"
+                        android:text="@string/skip"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        app:layout_constraintBottom_toTopOf="@+id/guideline5"
+                        app:layout_constraintStart_toStartOf="@+id/guideline3" />
+
+                    <TextView
+                        android:id="@+id/onboardingFragNextClickableTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:fontFamily="@font/airbnb_cereal_w_bk"
+                        android:text="@string/next"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        app:layout_constraintBottom_toTopOf="@+id/guideline5"
+                        app:layout_constraintEnd_toStartOf="@+id/guideline4" />
+
+                    <ImageView
+                        android:id="@+id/onboardingFragScreenPositionIV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:src="@drawable/dots1"
+                        app:layout_constraintBottom_toTopOf="@+id/guideline5"
+                        app:layout_constraintEnd_toStartOf="@+id/onboardingFragNextClickableTv"
+                        app:layout_constraintHorizontal_bias="0.507"
+                        app:layout_constraintStart_toEndOf="@+id/onboardingFragSkipClickableTv" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </FrameLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

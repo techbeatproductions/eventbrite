@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">eventbrite</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="explore_upcoming_and_nearby_events">" Explore Upcoming and Nearby Events "</string>
+    <string name="in_publishing_and_graphic_design">" In publishing and graphic designn, Lorem is a placeholder text commonly "</string>
+    <string name="skip">Skip</string>
+    <string name="next">Next</string>
+    <string name="we_have_modern_events_calendar_feature">" We Have Modern Events Calendar Feature"</string>
+    <string name="to_look_up_more_events">"  To Look Up More Events or Activities Nearby By Map"</string>
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome!"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="sign_up">Sign up</string>
+    <string name="sign_in">Sign in</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="or">OR</string>
+    <string name="full_name">Full name</string>
+    <string name="abc_email_com">abc@email.com</string>
+    <string name="your_password">Your Password</string>
+    <string name="login_with_google">Login with Google</string>
+    <string name="login_with_facebook">Login with Facebook</string>
+    <string name="back_button">back_button</string>
+    <string name="onboarding_image_view">onboarding_image_view</string>
+</resources>
