@@ -1,5 +1,6 @@
 package com.example.eventbrite;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +8,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +26,16 @@ public class AuthenticationFrag extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private View backImageButton;
+    private TextView screenName;
+    private View userName;
+    private View confirmPassword;
+    private Button authenticationBtn;
+    private TextView alreadyHaveAccTextView;
+    private TextView signInClickable;
+    private View rememberMeRadioButton;
+    private TextView forgotPasswordClickable;
 
     public AuthenticationFrag() {
         // Required empty public constructor
@@ -59,6 +72,58 @@ public class AuthenticationFrag extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_authentication, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_authentication,container, false);
+
+        //Initialize the views
+        backImageButton =  view.findViewById(R.id.backImageBtn);
+        screenName = (TextView) view.findViewById(R.id.screenNameTV);
+        userName= view.findViewById(R.id.fullNameTextInputLayout);
+        confirmPassword = view.findViewById(R.id.confirmPasswordTextInputLayout);
+        authenticationBtn = (Button) view.findViewById(R.id.authenticateBtn);
+        alreadyHaveAccTextView = (TextView) view.findViewById(R.id.alreadyHaveAnAccountTV);
+        signInClickable = (TextView) view.findViewById(R.id.signInClickableTV);
+        rememberMeRadioButton = view.findViewById(R.id.rememberMeRadioBtn);
+        forgotPasswordClickable = (TextView) view.findViewById(R.id.forgotPasswordClicakbleTV);
+
+        signInClickable.setOnClickListener(v -> navigateToSignIn());
+        authenticationBtn.setOnClickListener(v -> navigateToSignIn());
+        alreadyHaveAccTextView.setOnClickListener(v -> navigateToSignIn());
+        backImageButton.setOnClickListener(v -> navigateToOnboardingScreens());
+
+
+        return view;
     }
+
+    private void navigateToOnboardingScreens() {
+        Intent intent = new Intent(getActivity(), Onboarding1.class);
+        startActivity(intent);
+        getActivity().finish();
+    }
+
+    private void navigateToSignIn() {
+        Intent intent = new Intent(getActivity(), SignIn.class);
+        startActivity(intent);
+        getActivity().finish();
+    }
+
+    //Methods to control the views
+    public void showViews(){
+        backImageButton.setVisibility(View.INVISIBLE);
+        userName.setVisibility(View.INVISIBLE);
+        confirmPassword.setVisibility(View.INVISIBLE);
+        forgotPasswordClickable.setVisibility(View.VISIBLE);
+        rememberMeRadioButton.setVisibility(View.VISIBLE);
+    }
+
+    public void setStrings(int screenNameResId,int alreadyHaveAccResId, int signInClickableResId , int authenticationBtnResId){
+        screenName.setText(getString(screenNameResId));
+        alreadyHaveAccTextView.setText(getString(alreadyHaveAccResId));
+        signInClickable.setText(getString(signInClickableResId));
+        authenticationBtn.setText(getString(authenticationBtnResId));
+
+
+    }
+
+
 }

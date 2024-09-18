@@ -22,7 +22,7 @@
         app:layout_constraintGuide_end="24dp" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/backImageBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="-15dp"
@@ -34,7 +34,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/screenNameTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -43,7 +43,7 @@
         android:textColor="@color/black"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="@+id/guideline6"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton" />
+        app:layout_constraintTop_toBottomOf="@+id/backImageBtn" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/fullNameTextInputLayout"
@@ -54,7 +54,7 @@
         android:layout_marginEnd="24dp"
         app:layout_constraintEnd_toStartOf="@+id/guideline7"
         app:layout_constraintStart_toStartOf="@+id/guideline6"
-        app:layout_constraintTop_toBottomOf="@+id/textView">
+        app:layout_constraintTop_toBottomOf="@+id/screenNameTV">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/FullNameTextInputEditText"
@@ -112,6 +112,31 @@
             android:inputType="text|textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <RadioButton
+        android:id="@+id/rememberMeRadioBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/airbnb_cereal_w_xbd"
+        android:text="Remember Me"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/guideline6"
+        app:layout_constraintTop_toBottomOf="@+id/passwordTextInputLayout" />
+
+    <TextView
+        android:id="@+id/forgotPasswordClicakbleTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:fontFamily="@font/airbnb_cereal_w_xbd"
+        android:text="Forgot Password?"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/rememberMeRadioBtn"
+        app:layout_constraintEnd_toStartOf="@+id/guideline7"
+        app:layout_constraintTop_toBottomOf="@+id/passwordTextInputLayout" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/confirmPasswordTextInputLayout"
         android:layout_width="match_parent"
@@ -136,7 +161,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/authenticateBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="48dp"
@@ -155,7 +180,7 @@
         app:layout_constraintTop_toBottomOf="@+id/confirmPasswordTextInputLayout" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/orTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -165,10 +190,10 @@
         android:textSize="12sp"
         app:layout_constraintEnd_toStartOf="@+id/guideline7"
         app:layout_constraintStart_toStartOf="@+id/guideline6"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintTop_toBottomOf="@+id/authenticateBtn" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/loginWithGoogleBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="48dp"
@@ -184,10 +209,10 @@
         app:cornerRadius="8dp"
         app:layout_constraintEnd_toStartOf="@+id/guideline7"
         app:layout_constraintStart_toStartOf="@+id/guideline6"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/orTV" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/loginWithFbBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="48dp"
@@ -203,9 +228,10 @@
         app:cornerRadius="8dp"
         app:layout_constraintEnd_toStartOf="@+id/guideline7"
         app:layout_constraintStart_toStartOf="@+id/guideline6"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
+        app:layout_constraintTop_toBottomOf="@+id/loginWithGoogleBtn" />
 
     <LinearLayout
+        android:id="@+id/alreadyHaveAnAccTV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="48dp"
@@ -216,10 +242,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline7"
         app:layout_constraintStart_toStartOf="@+id/guideline6"
-        app:layout_constraintTop_toBottomOf="@+id/button3">
+        app:layout_constraintTop_toBottomOf="@+id/loginWithFbBtn">
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/alreadyHaveAnAccountTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -229,7 +255,7 @@
             android:textColor="@color/black" />
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/signInClickableTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -246,9 +272,9 @@
         android:layout_marginStart="40dp"
         android:elevation="12dp"
         android:src="@drawable/google"
-        app:layout_constraintBottom_toBottomOf="@+id/button2"
-        app:layout_constraintStart_toStartOf="@+id/button2"
-        app:layout_constraintTop_toTopOf="@+id/button2" />
+        app:layout_constraintBottom_toBottomOf="@+id/loginWithGoogleBtn"
+        app:layout_constraintStart_toStartOf="@+id/loginWithGoogleBtn"
+        app:layout_constraintTop_toTopOf="@+id/loginWithGoogleBtn" />
 
     <ImageView
         android:id="@+id/imageView3"
@@ -257,9 +283,9 @@
         android:layout_marginStart="40dp"
         android:elevation="12dp"
         android:src="@drawable/facebook"
-        app:layout_constraintBottom_toBottomOf="@+id/button3"
-        app:layout_constraintStart_toStartOf="@+id/button3"
-        app:layout_constraintTop_toTopOf="@+id/button3" />
+        app:layout_constraintBottom_toBottomOf="@+id/loginWithFbBtn"
+        app:layout_constraintStart_toStartOf="@+id/loginWithFbBtn"
+        app:layout_constraintTop_toTopOf="@+id/loginWithFbBtn" />
 
     <ImageView
         android:id="@+id/imageView4"
@@ -268,8 +294,8 @@
         android:layout_marginEnd="40dp"
         android:elevation="12dp"
         android:src="@drawable/button_auth_icons"
-        app:layout_constraintBottom_toBottomOf="@+id/button"
-        app:layout_constraintEnd_toEndOf="@+id/button"
-        app:layout_constraintTop_toTopOf="@+id/button" />
+        app:layout_constraintBottom_toBottomOf="@+id/authenticateBtn"
+        app:layout_constraintEnd_toEndOf="@+id/authenticateBtn"
+        app:layout_constraintTop_toTopOf="@+id/authenticateBtn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
