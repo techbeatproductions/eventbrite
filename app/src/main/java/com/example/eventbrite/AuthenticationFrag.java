@@ -3,13 +3,19 @@ package com.example.eventbrite;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.RadioButton;
 import android.widget.TextView;
+
+import com.google.android.material.textfield.TextInputLayout;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,14 +33,14 @@ public class AuthenticationFrag extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private View backImageButton;
+    private ImageButton backImageButton;
     private TextView screenName;
-    private View userName;
-    private View confirmPassword;
+    private TextInputLayout userName;
+    private TextInputLayout confirmPassword;
     private Button authenticationBtn;
     private TextView alreadyHaveAccTextView;
     private TextView signInClickable;
-    private View rememberMeRadioButton;
+    private RadioButton rememberMeRadioButton;
     private TextView forgotPasswordClickable;
 
     public AuthenticationFrag() {
@@ -71,20 +77,40 @@ public class AuthenticationFrag extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
 
-        View view = inflater.inflate(R.layout.fragment_authentication,container, false);
+        return inflater.inflate(R.layout.fragment_authentication, container, false);
+    }
+
+    // Define the interface
+    public interface AuthenticationFragListener {
+        void onFragmentViewCreated(AuthenticationFrag fragment);
+    }
+
+    private AuthenticationFragListener listener;
+
+    // Set the listener
+    public void setListener(AuthenticationFragListener listener) {
+        this.listener = listener;
+    }
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         //Initialize the views
-        backImageButton =  view.findViewById(R.id.backImageBtn);
+        backImageButton = (ImageButton) view.findViewById(R.id.backImageBtn);
         screenName = (TextView) view.findViewById(R.id.screenNameTV);
-        userName= view.findViewById(R.id.fullNameTextInputLayout);
-        confirmPassword = view.findViewById(R.id.confirmPasswordTextInputLayout);
+        userName= (TextInputLayout) view.findViewById(R.id.fullNameTextInputLayout);
+        confirmPassword = (TextInputLayout) view.findViewById(R.id.confirmPasswordTextInputLayout);
         authenticationBtn = (Button) view.findViewById(R.id.authenticateBtn);
         alreadyHaveAccTextView = (TextView) view.findViewById(R.id.alreadyHaveAnAccountTV);
         signInClickable = (TextView) view.findViewById(R.id.signInClickableTV);
-        rememberMeRadioButton = view.findViewById(R.id.rememberMeRadioBtn);
+        rememberMeRadioButton = (RadioButton) view.findViewById(R.id.rememberMeRadioBtn);
         forgotPasswordClickable = (TextView) view.findViewById(R.id.forgotPasswordClicakbleTV);
+
+        // Notify listener that the fragment's view is ready
+        if (listener != null) {
+            listener.onFragmentViewCreated(this);
+        }
 
         signInClickable.setOnClickListener(v -> navigateToSignIn());
         authenticationBtn.setOnClickListener(v -> navigateToSignIn());
@@ -92,7 +118,6 @@ public class AuthenticationFrag extends Fragment {
         backImageButton.setOnClickListener(v -> navigateToOnboardingScreens());
 
 
-        return view;
     }
 
     private void navigateToOnboardingScreens() {
@@ -102,16 +127,25 @@ public class AuthenticationFrag extends Fragment {
     }
 
     private void navigateToSignIn() {
-        Intent intent = new Intent(getActivity(), SignIn.class);
+        String btnText = authenticationBtn.getText().toString();
+        Intent intent;
+
+        if(btnText.equals(getString(R.string.sign_up))){
+            intent = new Intent(getActivity(), SignIn.class);
+
+        }else{
+            intent = new Intent(getActivity(), SignUp.class);
+        }
         startActivity(intent);
         getActivity().finish();
+
     }
 
     //Methods to control the views
     public void showViews(){
-        backImageButton.setVisibility(View.INVISIBLE);
-        userName.setVisibility(View.INVISIBLE);
-        confirmPassword.setVisibility(View.INVISIBLE);
+        backImageButton.setVisibility(View.GONE);
+        userName.setVisibility(View.GONE);
+        confirmPassword.setVisibility(View.GONE);
         forgotPasswordClickable.setVisibility(View.VISIBLE);
         rememberMeRadioButton.setVisibility(View.VISIBLE);
     }

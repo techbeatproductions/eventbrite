@@ -63,7 +63,8 @@
             android:drawableStart="@drawable/user_icon"
             android:drawablePadding="8dp"
             android:fontFamily="@font/airbnb_cereal_w_lt"
-            android:hint="@string/full_name" />
+            android:hint="@string/full_name"
+            android:textColor="@color/black" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -85,7 +86,8 @@
             android:drawablePadding="8dp"
             android:fontFamily="@font/airbnb_cereal_w_lt"
             android:hint="@string/abc_email_com"
-            android:inputType="text|textEmailAddress" />
+            android:inputType="text|textEmailAddress"
+            android:textColor="@color/black" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -109,7 +111,8 @@
             android:drawablePadding="8dp"
             android:fontFamily="@font/airbnb_cereal_w_lt"
             android:hint="@string/your_password"
-            android:inputType="text|textPassword" />
+            android:inputType="text|textPassword"
+            android:textColor="@color/black" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <RadioButton
@@ -119,6 +122,7 @@
         android:layout_marginTop="24dp"
         android:fontFamily="@font/airbnb_cereal_w_xbd"
         android:text="Remember Me"
+        android:textColor="@color/black"
         android:visibility="invisible"
         app:layout_constraintStart_toStartOf="@+id/guideline6"
         app:layout_constraintTop_toBottomOf="@+id/passwordTextInputLayout" />
@@ -132,6 +136,7 @@
         android:focusable="true"
         android:fontFamily="@font/airbnb_cereal_w_xbd"
         android:text="Forgot Password?"
+        android:textColor="@color/black"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/rememberMeRadioBtn"
         app:layout_constraintEnd_toStartOf="@+id/guideline7"
@@ -157,7 +162,8 @@
             android:drawableStart="@drawable/padlock"
             android:drawablePadding="8dp"
             android:fontFamily="@font/airbnb_cereal_w_lt"
-            android:hint="@string/confirm_password" />
+            android:hint="@string/confirm_password"
+            android:textColor="@color/black" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
@@ -165,7 +171,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="48dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="48dp"
         android:layout_marginEnd="48dp"
         android:backgroundTint="@color/eventbrite_card_blue"
         android:elevation="10dp"
@@ -177,7 +183,7 @@
         app:cornerRadius="8dp"
         app:layout_constraintEnd_toStartOf="@+id/guideline7"
         app:layout_constraintStart_toStartOf="@+id/guideline6"
-        app:layout_constraintTop_toBottomOf="@+id/confirmPasswordTextInputLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/rememberMeRadioBtn" />
 
     <TextView
         android:id="@+id/orTV"
