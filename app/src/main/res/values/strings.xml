@@ -29,4 +29,7 @@
     <string name="back_button">back_button</string>
     <string name="onboarding_image_view">onboarding_image_view</string>
     <string name="dont_have_an_account">Don\'t have an account?</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="please_enter_your_email_address_to_request_a_password_reset">Please enter your email address to request a password reset</string>
+    <string name="send">SEND</string>
 </resources>

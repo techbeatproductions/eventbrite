@@ -3,6 +3,7 @@ package com.example.eventbrite;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,8 +11,11 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class SignIn extends AppCompatActivity implements AuthenticationFrag.AuthenticationFragListener{
 
+    private FirebaseAuth mAuth;
     private  static final  String TAG = "SignIn";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +52,28 @@ public class SignIn extends AppCompatActivity implements AuthenticationFrag.Auth
             fragment.setListener(this);
         }
 
+        mAuth = FirebaseAuth.getInstance();
+
 
     }
+    public void loginUser(String email, String password){
+        mAuth.signInWithEmailAndPassword(email,password)
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()){
+                        //Sign In Success
+                        Log.d(TAG, "Sign in with email: Success");
+
+                        //Navigate to another activity
+                    }else{
+                        Log.w(TAG, "loginUser:Sign in with email failure ", task.getException());
+                        Toast.makeText(SignIn.this, "Email or Password is incorrect", Toast.LENGTH_SHORT).show();
+
+
+                    }
+                });
+
+    }
+
     @Override
     public void onFragmentViewCreated(AuthenticationFrag fragment) {
         // Call fragment methods after views are initialized

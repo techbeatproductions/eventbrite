@@ -3,4 +3,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="eventbrite_card_blue">#5669FF</color>
+    <color name="button_color_1">#F0635A</color>
+    <color name="button_color_2">#F59762</color>
+    <color name="button_color_3">#29D697</color>
+    <color name="button_color_4">#46CDFB</color>
 </resources>

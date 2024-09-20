@@ -13,6 +13,12 @@
         android:theme="@style/Theme.Eventbrite"
         tools:targetApi="31">
         <activity
+            android:name=".Home"
+            android:exported="false" />
+        <activity
+            android:name=".ResetPassword"
+            android:exported="false" />
+        <activity
             android:name=".SignIn"
             android:exported="false" />
         <activity

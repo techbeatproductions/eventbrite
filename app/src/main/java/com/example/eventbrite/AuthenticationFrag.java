@@ -11,10 +11,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 /**
@@ -42,6 +44,9 @@ public class AuthenticationFrag extends Fragment {
     private TextView signInClickable;
     private RadioButton rememberMeRadioButton;
     private TextView forgotPasswordClickable;
+    private TextInputEditText userFullName;
+    private TextInputEditText userEmail;
+    private TextInputEditText userPassword;
 
     public AuthenticationFrag() {
         // Required empty public constructor
@@ -106,6 +111,10 @@ public class AuthenticationFrag extends Fragment {
         signInClickable = (TextView) view.findViewById(R.id.signInClickableTV);
         rememberMeRadioButton = (RadioButton) view.findViewById(R.id.rememberMeRadioBtn);
         forgotPasswordClickable = (TextView) view.findViewById(R.id.forgotPasswordClicakbleTV);
+        userFullName = (TextInputEditText) view.findViewById(R.id.FullNameTextInputEditText);
+        userEmail = (TextInputEditText) view.findViewById(R.id.EmailTextInputEditText);
+        userPassword = (TextInputEditText) view.findViewById(R.id.PasswordTextInputEditText);
+
 
         // Notify listener that the fragment's view is ready
         if (listener != null) {
@@ -113,11 +122,31 @@ public class AuthenticationFrag extends Fragment {
         }
 
         signInClickable.setOnClickListener(v -> navigateToSignIn());
-        authenticationBtn.setOnClickListener(v -> navigateToSignIn());
+        authenticationBtn.setOnClickListener(v -> authenticateUser());
         alreadyHaveAccTextView.setOnClickListener(v -> navigateToSignIn());
         backImageButton.setOnClickListener(v -> navigateToOnboardingScreens());
 
 
+    }
+
+    private void authenticateUser() {
+        String extractedUserFullName;
+        String extractedUserEmail;
+        String extractedUserPassword;
+        String btnText;
+
+        extractedUserFullName = userFullName.getText().toString().trim();
+        extractedUserEmail = userEmail.getText().toString().trim();
+        extractedUserPassword = userPassword.getText().toString().trim();
+        btnText= authenticationBtn.getText().toString();
+
+        if (btnText.equals("Sign up")){
+            ((SignUp) getActivity()).createUser(extractedUserEmail, extractedUserPassword, extractedUserFullName);
+
+        }else if(btnText.equals("Sign in")){
+
+            ((SignIn) getActivity()).loginUser(extractedUserEmail, extractedUserPassword);
+        }
     }
 
     private void navigateToOnboardingScreens() {
