@@ -125,8 +125,15 @@ public class AuthenticationFrag extends Fragment {
         authenticationBtn.setOnClickListener(v -> authenticateUser());
         alreadyHaveAccTextView.setOnClickListener(v -> navigateToSignIn());
         backImageButton.setOnClickListener(v -> navigateToOnboardingScreens());
+        forgotPasswordClickable.setOnClickListener(v -> navigateToResetPasswrd());
 
 
+    }
+
+    private void navigateToResetPasswrd() {
+        Intent intent = new Intent(getActivity(), ResetPassword.class);
+        startActivity(intent);
+        getActivity().finish();
     }
 
     private void authenticateUser() {
