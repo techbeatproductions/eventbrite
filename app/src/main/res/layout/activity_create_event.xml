@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".CreateEvent">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/createEventGuideLine1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="24dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/createEventGuideLine2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="24dp" />
+
+    <ImageView
+        android:id="@+id/createEventBackBtnIV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        app:layout_constraintStart_toStartOf="@id/createEventGuideLine1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/back" />
+
+    <TextView
+        android:id="@+id/createEventScreenNameTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:fontFamily="@font/airbnb_cereal_w_xbd"
+        android:text="Create Event"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/createEventBackBtnIV"
+        app:layout_constraintStart_toEndOf="@id/createEventBackBtnIV"
+        app:layout_constraintTop_toTopOf="@+id/createEventBackBtnIV" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/createEventEventTagTextInputLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toStartOf="@+id/createEventGuideLine2"
+        app:layout_constraintStart_toStartOf="@id/createEventGuideLine1"
+        app:layout_constraintTop_toBottomOf="@id/createEventBackBtnIV">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/createEventEventTagTextInputEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/airbnb_cereal_w_lt"
+            android:hint="Event Tag"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/createEventEventNameTextInputLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toStartOf="@id/createEventGuideLine2"
+        app:layout_constraintStart_toStartOf="@id/createEventGuideLine1"
+        app:layout_constraintTop_toBottomOf="@id/createEventEventTagTextInputLayout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/createEventEventNameTextInputEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/airbnb_cereal_w_lt"
+            android:hint="Event Name"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/createEventEventDescriptionTextInputLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toStartOf="@+id/createEventGuideLine2"
+        app:layout_constraintStart_toStartOf="@id/createEventGuideLine1"
+        app:layout_constraintTop_toBottomOf="@id/createEventEventNameTextInputLayout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/createEventEventDescriptionTextInputEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/airbnb_cereal_w_lt"
+            android:hint="Event Desription"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/createEventEventImageTextInputLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toStartOf="@+id/createEventGuideLine2"
+        app:layout_constraintStart_toStartOf="@id/createEventGuideLine1"
+        app:layout_constraintTop_toBottomOf="@id/createEventEventDescriptionTextInputLayout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/createEventEventImageTextInputEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/airbnb_cereal_w_lt"
+            android:hint="Event Image"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/createEventEventLocationTextInputLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toStartOf="@+id/createEventGuideLine2"
+        app:layout_constraintStart_toStartOf="@id/createEventGuideLine1"
+        app:layout_constraintTop_toBottomOf="@id/createEventEventImageTextInputLayout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/createEventEventLocationTextInputEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/airbnb_cereal_w_lt"
+            android:hint="Event Location"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/createEventEventDateTextInputLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toStartOf="@+id/createEventGuideLine2"
+        app:layout_constraintStart_toStartOf="@id/createEventGuideLine1"
+        app:layout_constraintTop_toBottomOf="@id/createEventEventLocationTextInputLayout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/createEventEventDateTextInputEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/airbnb_cereal_w_lt"
+            android:hint="Event Date"
+            android:inputType="datetime|date"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/createEventEventPriceTextInputLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toStartOf="@+id/createEventGuideLine2"
+        app:layout_constraintStart_toStartOf="@id/createEventGuideLine1"
+        app:layout_constraintTop_toBottomOf="@id/createEventEventDateTextInputLayout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/createEventEventPriceTextInputEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/airbnb_cereal_w_lt"
+            android:hint="Event Price"
+            android:inputType="number"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/createEventButton"
+        android:layout_width="0dp"
+
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/eventbrite_card_blue"
+        android:fontFamily="@font/airbnb_cereal_w_xbd"
+        android:text="Create Event"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/createEventGuideLine2"
+        app:layout_constraintStart_toStartOf="@id/createEventGuideLine1"
+        app:layout_constraintTop_toBottomOf="@id/createEventEventPriceTextInputLayout" />
+</androidx.constraintlayout.widget.ConstraintLayout>

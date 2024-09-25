@@ -1,34 +1,63 @@
 package com.example.eventbrite.Services;
 
+import android.net.Uri;
 import android.util.Log;
 
 import com.example.eventbrite.Models.Event;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class EventServices {
     private DatabaseReference databaseRef;
+    private StorageReference storageRef;
 
     public EventServices() {
         //Initialize Firebase realtime database reference
         this.databaseRef = FirebaseDatabase.getInstance().getReference("events");
+
+        //Initialize Firebase Storage reference
+        this.storageRef = FirebaseStorage.getInstance().getReference("events_images");
     }
 
-    //Create Event
-    public void createEvent(Event event){
+    //Create Event with image upload
+    public void createEvent(Event event, Uri imageUri){
         String eventId=databaseRef.push().getKey();
         if(eventId != null){
             event.setEvent_id(eventId);
-            databaseRef.child(eventId).setValue(event)
-                    .addOnSuccessListener(aVoid -> Log.d("FirebaseDB", "Event created successfully"))
-                    .addOnFailureListener(e -> Log.w("FirebaseDb", "Failed to create event",e));
+
+            uploadImage(imageUri, eventId, event);
+
         }
     }
 
+    private void uploadImage(Uri imageUri, String eventId, Event event){
+        StorageReference fileReference = storageRef.child(eventId + ".jpg");
+        fileReference.putFile(imageUri)
+                .addOnSuccessListener(taskSnapshot -> {
+                    //Get the download URL
+                    fileReference.getDownloadUrl().addOnSuccessListener(uri -> {
+                        event.setEvent_image(uri.toString()); //Set the image URL in the event object
+
+                        //Now save the event to the database
+                        saveEventToDatabase(event);
+                    });
+                })
+                .addOnFailureListener(e -> {
+                    Log.w("FirebaseStorage", "failed to upload image:"+ e.getMessage()) ;
+                });
+    }
+
+    private void saveEventToDatabase(Event event) {
+        databaseRef.child(event.getEvent_id()).setValue(event)
+                .addOnSuccessListener(aVoid -> Log.d("FirebaseDB", "Event created successfully"))
+                .addOnFailureListener(e -> Log.w("FirebaseDb", "Failed to create event",e));
+    }
 
     //Fetch event
     public void fetchEvent(String eventId, final onEventFetchedListener listener){

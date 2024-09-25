@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/login_bg"
+    tools:context=".SearchWhiteBar">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/searchWhiteBarGuideLine1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="24dp"
+        app:layout_constraintTop_toBottomOf="@id/searchWhiteBarGuideLineHorizontal1" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/searchWhiteBarGuideLine2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="24dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/searchWhiteBarGuideLineHorizontal1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="24dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/searchWhiteBarGuideLineHorizontal2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="170dp" />
+
+    <ImageView
+        android:id="@+id/backBtnInSearchWhiteBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:importantForAccessibility="no"
+        android:src="@drawable/back"
+        app:layout_constraintBottom_toBottomOf="@+id/searchTVInSearchWhiteBar"
+        app:layout_constraintStart_toEndOf="@id/searchWhiteBarGuideLine1"
+        app:layout_constraintTop_toBottomOf="@id/searchWhiteBarGuideLineHorizontal1"
+        app:tint="@color/black" />
+
+    <TextView
+        android:id="@+id/searchTVInSearchWhiteBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:fontFamily="@font/airbnb_cereal_w_xbd"
+        android:text="@string/search"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintStart_toEndOf="@+id/backBtnInSearchWhiteBar"
+        app:layout_constraintTop_toTopOf="@id/searchWhiteBarGuideLineHorizontal1" />
+
+    <SearchView
+        android:id="@+id/searchBarInSearchWhiteBar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="-14dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintEnd_toStartOf="@+id/filterBtnInSearchWhiteBar"
+        app:layout_constraintStart_toEndOf="@id/searchWhiteBarGuideLine1"
+        app:layout_constraintTop_toBottomOf="@id/backBtnInSearchWhiteBar" />
+
+    <Button
+        android:id="@+id/filterBtnInSearchWhiteBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/eventbrite_card_blue"
+        android:fontFamily="@font/airbnb_cereal_w_xbd"
+        android:text="@string/filters"
+        android:textAlignment="textEnd"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toBottomOf="@+id/searchBarInSearchWhiteBar"
+        app:layout_constraintEnd_toStartOf="@+id/searchWhiteBarGuideLine2"
+        app:layout_constraintTop_toTopOf="@+id/searchBarInSearchWhiteBar" />
+
+    <ImageView
+        android:id="@+id/filterIV"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:layout_marginEnd="-25dp"
+        android:importantForAccessibility="no"
+        android:src="@drawable/filters"
+        app:layout_constraintBottom_toBottomOf="@+id/filterBtnInSearchWhiteBar"
+        app:layout_constraintEnd_toStartOf="@+id/filterBtnInSearchWhiteBar"
+        app:layout_constraintTop_toTopOf="@+id/filterBtnInSearchWhiteBar"
+        app:tint="@color/white" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/eventsRecyclerViewInSearchWhiteBar"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/searchWhiteBarGuideLine2"
+        app:layout_constraintStart_toStartOf="@+id/searchWhiteBarGuideLine1"
+        app:layout_constraintTop_toBottomOf="@id/searchWhiteBarGuideLineHorizontal2"
+        tools:listitem="@layout/event_card_for_search_view_item" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,8 @@
 package com.example.eventbrite.Models;
 
-public class Event {
+import java.io.Serializable;
+
+public class Event implements Serializable {
     private String event_id;
     private String event_name;
     private String event_description;

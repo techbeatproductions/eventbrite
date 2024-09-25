@@ -1,5 +1,6 @@
 package com.example.eventbrite;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +18,7 @@ public class SignIn extends AppCompatActivity implements AuthenticationFrag.Auth
 
     private FirebaseAuth mAuth;
     private  static final  String TAG = "SignIn";
+    private  static final String TEST_EMAIL = "test1@gmail.com";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,11 +64,29 @@ public class SignIn extends AppCompatActivity implements AuthenticationFrag.Auth
                     if (task.isSuccessful()){
                         //Sign In Success
                         Log.d(TAG, "Sign in with email: Success");
+                        if (email.equals(TEST_EMAIL)) {
+                            // Navigate to CreateActivity if the email is the test email
+                            Intent intent = new Intent(SignIn.this, CreateEvent.class);
+                            startActivity(intent);
+                        } else {
+                            // Otherwise, navigate to Home activity
+                            Intent intent = new Intent(SignIn.this, Home.class);
+                            startActivity(intent);
+                        }
 
-                        //Navigate to another activity
+                        finish();
+
                     }else{
-                        Log.w(TAG, "loginUser:Sign in with email failure ", task.getException());
-                        Toast.makeText(SignIn.this, "Email or Password is incorrect", Toast.LENGTH_SHORT).show();
+                        //Sign In Failure
+                        Exception exception = task.getException();
+                        Log.w(TAG, "loginUser:Sign in with email failure ", exception);
+                        String errorMessage = "Authentication failed"; // Default message
+                        if (exception != null) {
+                            errorMessage = exception.getMessage(); // Retrieve the Firebase error message
+                        }
+
+                        // Show the exact error message
+                        Toast.makeText(SignIn.this, errorMessage, Toast.LENGTH_LONG).show();
 
 
                     }

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".SeeAllEventsFragment">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/SeeAllEventsGuideLine1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="24dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/SeeAllEventsGuideLine2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="24dp" />
+
+    <ImageView
+        android:id="@+id/backBtnSeeAllEventFragIV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:importantForAccessibility="no"
+        android:src="@drawable/back"
+        app:layout_constraintBottom_toBottomOf="@id/seeAllEventsScreenNameTV"
+        app:layout_constraintStart_toStartOf="@id/SeeAllEventsGuideLine1"
+        app:layout_constraintTop_toTopOf="@+id/seeAllEventsScreenNameTV"
+        app:tint="@color/black" />
+
+    <TextView
+        android:id="@+id/seeAllEventsScreenNameTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/airbnb_cereal_w_xbd"
+        android:text="@string/events"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintStart_toEndOf="@id/backBtnSeeAllEventFragIV"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/searchBtnIV"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:importantForAccessibility="no"
+        android:src="@drawable/car_ui_icon_search"
+        app:layout_constraintBottom_toBottomOf="@id/seeAllEventsScreenNameTV"
+        app:layout_constraintEnd_toStartOf="@id/SeeAllEventsGuideLine2"
+        app:layout_constraintTop_toTopOf="@id/seeAllEventsScreenNameTV"
+        app:tint="@color/black" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/eventsRecyclerViewInSeeAllEvents"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/SeeAllEventsGuideLine2"
+        app:layout_constraintStart_toStartOf="@id/SeeAllEventsGuideLine1"
+        app:layout_constraintTop_toBottomOf="@id/seeAllEventsScreenNameTV"
+        tools:listitem="@layout/event_card_for_search_view_item" />
+</androidx.constraintlayout.widget.ConstraintLayout>

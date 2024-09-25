@@ -81,6 +81,10 @@ public class SignUp extends AppCompatActivity {
                                     });
                         }
 
+                        Intent intent = new Intent(SignUp.this, Home.class);
+                        startActivity(intent);
+                        finish();
+
                     } else {
                         String errorMessage = "Registration Failed";
 

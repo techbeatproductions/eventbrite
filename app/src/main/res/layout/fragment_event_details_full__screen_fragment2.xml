@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/login_bg"
+    android:theme="@style/ThemeOverlay.Eventbrite.FullscreenContainer"
+    tools:context=".event_details_full_Screen_fragment2">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/eventDetailsFragGuideLineLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="24dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/eventDetailsFragGuidelineRight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="24dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/eventDetailsFragHorizontalGuidline1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="38dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/eventDetailsHorizontalGuidLine2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="180dp" />
+
+    <ImageView
+        android:id="@+id/eventImageIV"
+        android:layout_width="0dp"
+        android:layout_height="212dp"
+        android:importantForAccessibility="no"
+        android:scaleType="fitXY"
+        android:src="@drawable/event_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/backBtnIV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:importantForAccessibility="no"
+        android:src="@drawable/back"
+        app:layout_constraintStart_toStartOf="@id/eventDetailsFragGuideLineLeft"
+        app:layout_constraintTop_toTopOf="@id/eventDetailsFragHorizontalGuidline1"
+        app:tint="@color/white" />
+
+    <TextView
+        android:id="@+id/eventDetialsHeaderTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/airbnb_cereal_w_xbd"
+        android:shadowColor="@color/black"
+        android:shadowRadius="10"
+        android:text="@string/event_details"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@id/backBtnIV"
+        app:layout_constraintEnd_toStartOf="@id/bookMarkCardView"
+        app:layout_constraintHorizontal_bias="0.098"
+        app:layout_constraintStart_toEndOf="@id/backBtnIV"
+        app:layout_constraintTop_toTopOf="@+id/eventDetailsFragHorizontalGuidline1" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/bookMarkCardView"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        app:cardBackgroundColor="@color/button_bg_color3"
+        app:cardCornerRadius="12dp"
+        app:layout_constraintBottom_toBottomOf="@id/eventDetialsHeaderTV"
+        app:layout_constraintEnd_toStartOf="@id/eventDetailsFragGuidelineRight"
+        app:layout_constraintTop_toBottomOf="@id/eventDetailsFragHorizontalGuidline1">
+
+        <ImageView
+            android:id="@+id/imageView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/bookmark"
+            app:tint="@color/eventbrite_card_blue" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/inviteOthersCardView"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="30dp"
+        app:layout_constraintEnd_toStartOf="@id/eventDetailsFragGuidelineRight"
+        app:layout_constraintStart_toEndOf="@id/eventDetailsFragGuideLineLeft"
+        app:layout_constraintTop_toBottomOf="@id/eventDetailsHorizontalGuidLine2">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/profileView1IV"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="24dp"
+                android:background="@drawable/circular_background"
+                android:clipToOutline="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/event_image" />
+
+            <ImageView
+                android:id="@+id/profileView2IV"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="-10dp"
+                android:layout_toEndOf="@id/profileView1IV"
+                android:background="@drawable/circular_background"
+                android:clipToOutline="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/sample_organizer_profile_photo" />
+
+            <ImageView
+                android:id="@+id/profileView3IV"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="-10dp"
+                android:layout_toRightOf="@id/profileView2IV"
+                android:background="@drawable/circular_background"
+                android:clipToOutline="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/sample_organizer_profile_photo" />
+
+            <TextView
+                android:id="@+id/numberOfAttendingEventDetailsFragTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_toLeftOf="@id/inviteFriendsEventDetailFragBtn"
+                android:layout_toRightOf="@id/profileView3IV"
+                android:fontFamily="@font/airbnb_cereal_w_bk"
+                android:text="+20 Going"
+                android:textAlignment="center"
+                android:textColor="@color/eventbrite_card_blue"
+                android:textSize="11sp" />
+
+            <Button
+                android:id="@+id/inviteFriendsEventDetailFragBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="20dp"
+                android:backgroundTint="@color/eventbrite_card_blue"
+                android:fontFamily="@font/airbnb_cereal_w_xbd"
+                android:text="@string/invite"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/eventNameInEventDetailsTV"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/airbnb_cereal_w_xbd"
+        android:text="International Band Music Concert"
+        android:textColor="@color/black"
+        android:textSize="35sp"
+        app:layout_constraintEnd_toStartOf="@+id/eventDetailsFragGuidelineRight"
+        app:layout_constraintStart_toEndOf="@id/eventDetailsFragGuideLineLeft"
+        app:layout_constraintTop_toBottomOf="@id/inviteOthersCardView" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/eventDateInEventDetailsCardView"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="24dp"
+        app:cardBackgroundColor="@color/button_bg_color_2"
+        app:cardCornerRadius="12dp"
+        app:layout_constraintStart_toEndOf="@id/eventDetailsFragGuideLineLeft"
+        app:layout_constraintTop_toBottomOf="@id/eventNameInEventDetailsTV">
+
+        <ImageView
+            android:id="@+id/imageView13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/events"
+            app:tint="@color/eventbrite_card_blue" />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/actualEventDateInEventDetailsTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:fontFamily="@font/airbnb_cereal_w_bk"
+        android:text="14 December, 2021"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@id/eventDateInEventDetailsCardView"
+        app:layout_constraintTop_toTopOf="@id/eventDateInEventDetailsCardView" />
+
+    <TextView
+        android:id="@+id/actualEventTimeInEventDetailsTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:fontFamily="@font/airbnb_cereal_w_lt"
+        android:text="Tuesday, 4:00PM - 9:00PM"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/eventDateInEventDetailsCardView"
+        app:layout_constraintStart_toEndOf="@id/eventDateInEventDetailsCardView"
+        app:layout_constraintTop_toBottomOf="@id/actualEventDateInEventDetailsTV"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/eventLocationInEventDetailsCardView"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="24dp"
+        app:cardBackgroundColor="@color/button_bg_color_2"
+        app:cardCornerRadius="12dp"
+        app:layout_constraintStart_toEndOf="@id/eventDetailsFragGuideLineLeft"
+        app:layout_constraintTop_toBottomOf="@id/eventDateInEventDetailsCardView">
+
+        <ImageView
+            android:id="@+id/imageView14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/location"
+            app:tint="@color/eventbrite_card_blue" />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/actualEventMainLocationTV"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="139dp"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/airbnb_cereal_w_bk"
+        android:text="Gala Convention Center"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/actualEventDetailedLocationInEventDetailsTV"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/eventLocationInEventDetailsCardView"
+        app:layout_constraintTop_toTopOf="@id/eventLocationInEventDetailsCardView" />
+
+    <TextView
+        android:id="@+id/actualEventDetailedLocationInEventDetailsTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:fontFamily="@font/airbnb_cereal_w_lt"
+        android:text="36 Guild Street London, UK "
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/eventLocationInEventDetailsCardView"
+        app:layout_constraintStart_toEndOf="@id/eventLocationInEventDetailsCardView" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/eventOrganizerProfilePictureInEventDetailsCardView"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="24dp"
+        app:cardCornerRadius="12dp"
+        app:layout_constraintStart_toEndOf="@id/eventDetailsFragGuideLineLeft"
+        app:layout_constraintTop_toBottomOf="@id/eventLocationInEventDetailsCardView">
+
+        <ImageView
+            android:id="@+id/imageView15"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:scaleType="fitXY"
+            android:src="@drawable/sample_organizer_profile_photo" />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/actualEventOrganizerNameInEventDetailsTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:fontFamily="@font/airbnb_cereal_w_xbd"
+        android:text="Ashfak Sayem"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@id/eventOrganizerProfilePictureInEventDetailsCardView"
+        app:layout_constraintTop_toTopOf="@id/eventOrganizerProfilePictureInEventDetailsCardView" />
+
+    <TextView
+        android:id="@+id/actualEventOrganizerRoleInEventDetailsFragTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:fontFamily="@font/airbnb_cereal_w_lt"
+        android:text="Organizer"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/eventOrganizerProfilePictureInEventDetailsCardView"
+        app:layout_constraintStart_toEndOf="@id/eventOrganizerProfilePictureInEventDetailsCardView"
+        app:layout_constraintTop_toBottomOf="@id/actualEventOrganizerNameInEventDetailsTV"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/followEventOrganizerInEventDetailsFragBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:backgroundTint="@color/button_bg_color_2"
+        android:elevation="5dp"
+        android:fontFamily="@font/airbnb_cereal_w_xbd"
+        android:text="Follow"
+        android:textColor="@color/eventbrite_card_blue"
+        app:layout_constraintBottom_toBottomOf="@id/eventOrganizerProfilePictureInEventDetailsCardView"
+        app:layout_constraintEnd_toStartOf="@id/eventDetailsFragGuidelineRight"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/actualEventOrganizerRoleInEventDetailsFragTV"
+        app:layout_constraintTop_toTopOf="@id/eventOrganizerProfilePictureInEventDetailsCardView"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/aboutEventLabelInEventDetailsFragTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="72dp"
+        android:fontFamily="@font/airbnb_cereal_w_xbd"
+        android:text="About Event"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@id/eventDetailsFragGuideLineLeft"
+        app:layout_constraintTop_toBottomOf="@id/followEventOrganizerInEventDetailsFragBtn" />
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/buyEventTicketBtnInEventDetailsFrag"
+        app:layout_constraintEnd_toStartOf="@id/eventDetailsFragGuidelineRight"
+        app:layout_constraintStart_toEndOf="@id/eventDetailsFragGuideLineLeft"
+        app:layout_constraintTop_toBottomOf="@id/aboutEventLabelInEventDetailsFragTV">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="top"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/eventDescriptionInEventDetailsFragTV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="24dp"
+                android:text="@string/enjoy_your_favorite_dishe_and_a_lovely_your_friends_and_family_and_have_a_great_time_food_from_local_food_trucks_will_be_available_for_purchase_read_more"
+                android:textColor="@color/black"
+                android:textSize="11sp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <ImageView
+        android:id="@+id/imageView17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="48dp"
+        android:elevation="2dp"
+        android:src="@drawable/button_auth_icons"
+        app:layout_constraintBottom_toBottomOf="@id/buyEventTicketBtnInEventDetailsFrag"
+        app:layout_constraintEnd_toStartOf="@+id/eventDetailsFragGuidelineRight"
+        app:layout_constraintTop_toTopOf="@+id/buyEventTicketBtnInEventDetailsFrag" />
+
+    <Button
+        android:id="@+id/buyEventTicketBtnInEventDetailsFrag"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        android:backgroundTint="@color/eventbrite_card_blue"
+        android:fontFamily="@font/airbnb_cereal_w_xbd"
+        android:text="@string/buy_ticket_120"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/eventDetailsFragGuidelineRight"
+        app:layout_constraintStart_toEndOf="@id/eventDetailsFragGuideLineLeft" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
