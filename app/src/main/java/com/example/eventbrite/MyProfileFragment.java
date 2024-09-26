@@ -1,12 +1,21 @@
 package com.example.eventbrite;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log; // Import the Log class
 
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.eventbrite.Models.User;
+import com.example.eventbrite.Services.UserService;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -15,28 +24,19 @@ import android.view.ViewGroup;
  */
 public class MyProfileFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String TAG = "MyProfileFragment";
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private TextView fullNameMyProfileTV, followersTextView, followingTextView;
+    private String userId;
 
     public MyProfileFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MyProfileFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static MyProfileFragment newInstance(String param1, String param2) {
         MyProfileFragment fragment = new MyProfileFragment();
         Bundle args = new Bundle();
@@ -58,7 +58,60 @@ public class MyProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my_profile, container, false);
+        View view = inflater.inflate(R.layout.fragment_my_profile, container, false);
+        fullNameMyProfileTV = view.findViewById(R.id.fullNameMyProfileTV);
+        followersTextView = view.findViewById(R.id.followingNumberMyProfileTV);
+        followingTextView = view.findViewById(R.id.followersNumberMyProfileTV);
+        ImageView backBtnMyProfileFragIV = view.findViewById(R.id.backBtnMyProfileFragIV);
+
+        // Retrieve the user ID from SharedPreferences
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE);
+        userId = sharedPreferences.getString("userId", null);
+
+        // Log the user ID
+        Log.d(TAG, "Fetching user profile for user ID: " + userId);
+
+        // Only fetch the user profile if the userId is not null
+        if (userId != null) {
+            fetchUserProfile(userId);
+        } else {
+            Toast.makeText(getContext(), "User ID not found.", Toast.LENGTH_SHORT).show();
+        }
+
+        // Set up back button listener
+        backBtnMyProfileFragIV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requireActivity().finish(); // End current activity to go back
+            }
+        });
+
+        return view;
     }
+
+    private void fetchUserProfile(String userId) {
+        UserService userService = new UserService();
+        userService.fetchUserProfile(userId, new UserService.UserProfileCallback() {
+            @Override
+            public void onSuccess(User user) {
+                // Log the retrieved user details
+                Log.d(TAG, "User fetched: " + user.toString());
+
+                // Update the UI with the user's information
+                fullNameMyProfileTV.setText(user.getName());
+                followersTextView.setText(String.valueOf(user.getFollowers().size()));
+                followingTextView.setText(String.valueOf(user.getFollowing().size()));
+
+                // Show a success toast message
+                Toast.makeText(getContext(), "Profile loaded successfully!", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+                // Show error toast if fetching the profile fails
+                Toast.makeText(getContext(), "Error fetching profile: " + errorMessage, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 }

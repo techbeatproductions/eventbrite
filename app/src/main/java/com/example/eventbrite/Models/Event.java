@@ -12,12 +12,13 @@ public class Event implements Serializable {
     private String event_location;
     private String event_image;
     private Double event_ticket_price;
+    private String user_id;
 
     //Default constructor for Firebase
     public Event() {
     }
 
-    public Event(String event_id, String event_name, String event_description, String event_tag, String event_date, String event_time, String event_location, String event_image, Double event_ticket_price) {
+    public Event(String event_id, String event_name, String event_description, String event_tag, String event_date, String event_time, String event_location, String event_image, Double event_ticket_price, String user_id) {
         this.event_id = event_id;
         this.event_name = event_name;
         this.event_description = event_description;
@@ -27,6 +28,7 @@ public class Event implements Serializable {
         this.event_location = event_location;
         this.event_image = event_image;
         this.event_ticket_price = event_ticket_price;
+        this.user_id = user_id;
     }
 
     public String getEvent_id() {
@@ -99,5 +101,13 @@ public class Event implements Serializable {
 
     public void setEvent_ticket_price(Double event_ticket_price) {
         this.event_ticket_price = event_ticket_price;
+    }
+
+    public String getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
     }
 }

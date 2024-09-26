@@ -6,6 +6,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.DatabaseError;
+import com.example.eventbrite.Services.UserProfileCallback;
+
 
 
 import java.util.HashMap;
@@ -91,6 +93,7 @@ public class UserService {
     }
 
     // Method to invite others to an event
+
     public void inviteOthersToEvent(User user, String eventId, List<String> userIds) {
         for (String inviteeId : userIds) {
             DatabaseReference inviteRef = FirebaseDatabase.getInstance().getReference("Users").child(inviteeId).child("invitations");
@@ -98,6 +101,31 @@ public class UserService {
         }
         System.out.println("Users have been invited to the event with ID " + eventId);
     }
+
+    // Method to create a user profile in Firebase Realtime Database
+    public void createUserProfile(User user, final ProfileSaveCallback callback) {
+        getUserDatabaseReference(user.getUserId()).setValue(user)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        callback.onSuccess(true);
+                    } else {
+                        callback.onSuccess(false);
+                    }
+                });
+    }
+
+    // Callback interface for saving the profile
+    public interface ProfileSaveCallback {
+        void onSuccess(boolean success);
+    }
+
+    public interface UserProfileCallback {
+        void onSuccess(User user);
+        void onFailure(String errorMessage);
+    }
+
+
+
 
 
 }

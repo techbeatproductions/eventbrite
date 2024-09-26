@@ -1,6 +1,7 @@
 package com.example.eventbrite;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,13 +13,17 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.eventbrite.Models.User;
+import com.example.eventbrite.Services.UserService;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 
 public class SignIn extends AppCompatActivity implements AuthenticationFrag.AuthenticationFragListener{
 
     private FirebaseAuth mAuth;
     private  static final  String TAG = "SignIn";
-    private  static final String TEST_EMAIL = "test1@gmail.com";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,41 +63,8 @@ public class SignIn extends AppCompatActivity implements AuthenticationFrag.Auth
 
 
     }
-    public void loginUser(String email, String password){
-        mAuth.signInWithEmailAndPassword(email,password)
-                .addOnCompleteListener(this, task -> {
-                    if (task.isSuccessful()){
-                        //Sign In Success
-                        Log.d(TAG, "Sign in with email: Success");
-                        if (email.equals(TEST_EMAIL)) {
-                            // Navigate to CreateActivity if the email is the test email
-                            Intent intent = new Intent(SignIn.this, CreateEvent.class);
-                            startActivity(intent);
-                        } else {
-                            // Otherwise, navigate to Home activity
-                            Intent intent = new Intent(SignIn.this, Home.class);
-                            startActivity(intent);
-                        }
-
-                        finish();
-
-                    }else{
-                        //Sign In Failure
-                        Exception exception = task.getException();
-                        Log.w(TAG, "loginUser:Sign in with email failure ", exception);
-                        String errorMessage = "Authentication failed"; // Default message
-                        if (exception != null) {
-                            errorMessage = exception.getMessage(); // Retrieve the Firebase error message
-                        }
-
-                        // Show the exact error message
-                        Toast.makeText(SignIn.this, errorMessage, Toast.LENGTH_LONG).show();
 
 
-                    }
-                });
-
-    }
 
     @Override
     public void onFragmentViewCreated(AuthenticationFrag fragment) {
@@ -102,4 +74,60 @@ public class SignIn extends AppCompatActivity implements AuthenticationFrag.Auth
         // Log fragment state update
         Log.d(TAG, "Fragment views shown and strings set.");
     }
+
+    public void loginUser(String email, String password) {
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        Log.d(TAG, "Sign in with email: Success");
+                        FirebaseUser firebaseUser = mAuth.getCurrentUser();
+                        if (firebaseUser != null) {
+                            String userId = firebaseUser.getUid();
+
+                            SharedPreferences sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString("userId", userId);
+                            editor.apply(); // Save userId
+
+                            // Fetch the user's profile from Firebase
+                            UserService userService = new UserService();
+                            userService.fetchUserProfile(userId, new UserService.UserProfileCallback() {
+                                @Override
+                                public void onSuccess(User user) {
+                                    Log.d(TAG, "User profile fetched: " + user.getName());
+
+                                    // Log the user type
+                                    Log.d(TAG, "User type: " + user.getUserType());
+
+                                    // Redirect to the appropriate activity based on userType
+                                    Intent intent;
+                                    if ("organizer".equals(user.getUserType())) {
+                                        intent = new Intent(SignIn.this, CreateEvent.class);
+                                    } else {
+                                        intent = new Intent(SignIn.this, Home.class);
+                                    }
+                                    startActivity(intent);
+                                    finish();
+                                }
+
+                                @Override
+                                public void onFailure(String errorMessage) {
+                                    Log.w(TAG, "Failed to fetch user profile: " + errorMessage);
+                                    // Optionally handle the failure by showing a message or redirecting to a default screen
+                                    Toast.makeText(SignIn.this, "Failed to fetch user profile", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                    } else {
+                        // Handle sign-in failure
+                        Exception exception = task.getException();
+                        String errorMessage = exception != null ? exception.getMessage() : "Authentication failed";
+                        Toast.makeText(SignIn.this, errorMessage, Toast.LENGTH_LONG).show();
+                    }
+                });
+    }
+
+
+
+
 }

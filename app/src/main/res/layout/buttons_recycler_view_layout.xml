@@ -7,15 +7,17 @@
 
     <Button
         android:id="@+id/eventTagButtonRecyclerView"
-        android:layout_width="110dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="10dp"
+        android:layout_marginBottom="2dp"
         android:backgroundTint="@color/button_color_1"
         android:fontFamily="@font/airbnb_cereal_w_bd"
         android:text="@string/sports"
         android:textAlignment="textEnd"
         android:textColor="@color/white"
         app:cornerRadius="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

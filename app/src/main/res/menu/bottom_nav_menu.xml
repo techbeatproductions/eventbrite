@@ -2,15 +2,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/explore"
         android:icon="@drawable/explore"
         android:title="@string/explore" />
     <item
+        android:id="@+id/events"
         android:icon="@drawable/events"
         android:title="@string/events" />
+
     <item
-        android:icon="@drawable/map"
-        android:title="@string/map" />
-    <item
+        android:id="@+id/profile"
         android:icon="@drawable/profile"
         android:title="@string/profile" />
 </menu>

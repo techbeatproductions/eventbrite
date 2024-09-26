@@ -1,5 +1,6 @@
 package com.example.eventbrite.Adapters;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import com.example.eventbrite.R;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 public class EventButtonTagAdapter extends RecyclerView.Adapter<EventButtonTagAdapter.EventButtonTagViewHolder> {
@@ -24,6 +26,17 @@ public class EventButtonTagAdapter extends RecyclerView.Adapter<EventButtonTagAd
     public interface OnTagClickListener {
         void onTagClick(String tag);
     }
+
+    // Define a set of colors to choose from
+    private final int[] colors = {
+
+            Color.parseColor("#F0635A"), // Custom color
+            Color.parseColor("#F59762"), // Custom color
+            Color.parseColor("#29D697"), // Custom color
+            Color.parseColor("#46CDFB")  // Custom color
+    };
+
+    private int lastUsedColor = -1;
 
     public EventButtonTagAdapter(OnTagClickListener listener) {
         this.onTagClickListener = listener;
@@ -40,6 +53,9 @@ public class EventButtonTagAdapter extends RecyclerView.Adapter<EventButtonTagAd
     public void onBindViewHolder(@NonNull EventButtonTagAdapter.EventButtonTagViewHolder holder, int position) {
         String tag = uniqueTagsList.get(position);
         holder.tagButton.setText(tag);
+
+        // Set a random color from the predefined color array
+        holder.tagButton.setBackgroundColor(getRandomColorFromSet());
 
         // On click listener for the button
         holder.tagButton.setOnClickListener(v -> eventTagButtonClicked(tag));
@@ -67,6 +83,18 @@ public class EventButtonTagAdapter extends RecyclerView.Adapter<EventButtonTagAd
         this.uniqueTagsList.clear();
         this.uniqueTagsList.addAll(uniqueTagsSet); // Update unique tags
         notifyDataSetChanged(); // Notify the adapter of data change
+    }
+
+    // Method to get a random color from the predefined set
+    private int getRandomColorFromSet() {
+        Random random = new Random();
+        int newColor;
+        do {
+            newColor = colors[random.nextInt(colors.length)]; // Select a random color from the array
+        } while (newColor == lastUsedColor); // Ensure it's not the same as the last color
+
+        lastUsedColor = newColor; // Update the last used color
+        return newColor; // Return the new color
     }
 
     public static class EventButtonTagViewHolder extends RecyclerView.ViewHolder {

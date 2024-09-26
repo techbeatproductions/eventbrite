@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".MyProfileFullFragment">
 
     <androidx.constraintlayout.widget.Guideline
@@ -23,10 +24,10 @@
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/profileReusedFragmentContainerView"
         android:name="com.example.eventbrite.MyProfileFragment"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toStartOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/MyProfileGuideLine2"
+        app:layout_constraintStart_toStartOf="@id/MyProfileFullGuideLine1"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView

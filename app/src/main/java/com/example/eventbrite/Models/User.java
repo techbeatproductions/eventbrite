@@ -1,5 +1,6 @@
 package com.example.eventbrite.Models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class User {
@@ -11,13 +12,19 @@ public class User {
     private List<String> following;
     private String userType;
 
+    public User(){
+        this.followers = new ArrayList<>(); // Initialize to avoid null
+        this.following = new ArrayList<>(); // Initialize to avoid null
+
+    }
+
     public User(String userId, String name, String email, String about, List<String> followers, List<String> following, String userType) {
         this.userId = userId;
         this.name = name;
         this.email = email;
         this.about = about;
-        this.followers = followers;
-        this.following = following;
+        this.followers = followers != null ? followers : new ArrayList<>(); // Avoid null
+        this.following = following != null ? following : new ArrayList<>(); // Avoid null
         this.userType = userType;
     }
 
@@ -58,7 +65,7 @@ public class User {
     }
 
     public void setFollowers(List<String> followers) {
-        this.followers = followers;
+        this.followers = followers != null ? followers : new ArrayList<>(); // Avoid null
     }
 
     public List<String> getFollowing() {
@@ -66,7 +73,7 @@ public class User {
     }
 
     public void setFollowing(List<String> following) {
-        this.following = following;
+        this.following = following != null ? following : new ArrayList<>(); // Avoid null
     }
 
     public String getUserType() {

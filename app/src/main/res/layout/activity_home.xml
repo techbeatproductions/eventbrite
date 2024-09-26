@@ -110,8 +110,8 @@
             android:layout_marginTop="96dp"
             android:layout_marginEnd="94dp"
             android:elevation="3dp"
-            android:tint="@color/white"
-            app:srcCompat="@drawable/filters" />
+            app:srcCompat="@drawable/filters"
+            app:tint="@color/white" />
 
         <Button
             android:id="@+id/filtersBtn"

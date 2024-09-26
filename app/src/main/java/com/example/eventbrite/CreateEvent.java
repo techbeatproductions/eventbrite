@@ -1,11 +1,14 @@
 package com.example.eventbrite;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -17,23 +20,24 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 
+import com.bumptech.glide.Glide;
 import com.example.eventbrite.Models.Event;
 import com.example.eventbrite.Services.EventServices;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Locale;
 import java.util.Objects;
 
 public class CreateEvent extends AppCompatActivity {
 
-    TextInputLayout createEventImageClickable;
-    TextInputEditText createEventTag,createEventName,createEventDescription,createEventImage,createEventLocation,createEventDate,createEventPrice;
-    Button createEventBtn;
+    TextView selectedEventImageTv,selectedEventDateTv, selectedEventTimeTv;
+    TextInputEditText createEventTag,createEventName,createEventDescription,createEventLocation,createEventPrice;
+    Button createEventBtn, selectEventImage, selectEventDate, selectEventTime;
     Uri imageUri;
     Calendar calendar;
+    ImageView selectedEventImageIv;
 
 
 
@@ -45,7 +49,8 @@ public class CreateEvent extends AppCompatActivity {
                     imageUri = result.getData().getData();
                     // Optionally, set the URI as text to the EditText
                     assert imageUri != null;
-                    createEventImage.setText(imageUri.toString());
+                    selectedEventImageTv.setText("Image Selected");
+                    displaySelectedImage();
 
                 }
             });
@@ -64,11 +69,18 @@ public class CreateEvent extends AppCompatActivity {
         createEventTag = (TextInputEditText) findViewById(R.id.createEventEventTagTextInputEditText);
         createEventName = (TextInputEditText) findViewById(R.id.createEventEventNameTextInputEditText);
         createEventDescription= (TextInputEditText) findViewById(R.id.createEventEventDescriptionTextInputEditText);
-        createEventImage= (TextInputEditText) findViewById(R.id.createEventEventImageTextInputEditText);
-        createEventDate= (TextInputEditText) findViewById(R.id.createEventEventDateTextInputEditText);
         createEventLocation= (TextInputEditText) findViewById(R.id.createEventEventLocationTextInputEditText);
         createEventPrice= (TextInputEditText) findViewById(R.id.createEventEventPriceTextInputEditText);
-        createEventBtn = (Button) findViewById(R.id.createEventButton);
+        createEventBtn = (Button) findViewById(R.id.createEventBtn);
+
+        selectEventTime = (Button) findViewById(R.id.createEventSelectEventTimeBtn);
+        selectedEventTimeTv = (TextView) findViewById(R.id.selectedEventTimeTv);
+
+        selectEventDate= (Button) findViewById(R.id.createEventSelectEventDateBtn);
+        selectEventImage= (Button) findViewById(R.id.createEventSelectEventImageBtn);
+        selectedEventDateTv = (TextView) findViewById(R.id.selectedEventDateTv);
+        selectedEventImageTv = (TextView) findViewById(R.id.selectedEventImageTv);
+        selectedEventImageIv = findViewById(R.id.selectedEventImageIV);
 
 
         //Set up date picker for the event date field
@@ -80,15 +92,27 @@ public class CreateEvent extends AppCompatActivity {
             updateDateField();
         };
 
-        createEventDate.setOnClickListener(v -> {
+        // Set up time picker
+        TimePickerDialog.OnTimeSetListener timeSetListener = (view, hourOfDay, minute) -> {
+            calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+            calendar.set(Calendar.MINUTE, minute);
+            updateTimeField(); // Update time field
+        };
+
+        selectEventDate.setOnClickListener(v -> {
             new DatePickerDialog(CreateEvent.this, dateSetListener,
                     calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
                     calendar.get(Calendar.DAY_OF_MONTH)).show();
         });
 
-        createEventImageClickable= (TextInputLayout) findViewById(R.id.createEventEventImageTextInputLayout);
+        selectEventTime.setOnClickListener(v -> {
+            new TimePickerDialog(CreateEvent.this, timeSetListener,
+                    calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true).show();
+        });
 
-        createEventImage.setOnClickListener(v -> openFileChooser());
+       // createEventImageClickable= (TextInputLayout) findViewById(R.id.createEventSelectEventImageBtn);
+
+        selectEventImage.setOnClickListener(v -> openFileChooser());
         createEventBtn.setOnClickListener(v -> createEventFunction());
     }
 
@@ -100,8 +124,20 @@ public class CreateEvent extends AppCompatActivity {
                 calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.YEAR)
         );
-        createEventDate.setText(formattedDate);
+        selectedEventDateTv.setText(formattedDate);
     }
+
+    private void updateTimeField() {
+        String formattedTime = String.format("%02d:%02d", calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE));
+        selectedEventTimeTv.setText(formattedTime); // Display selected time
+    }
+
+    private void displaySelectedImage() {
+        Glide.with(this)  // Use Glide to load the image
+                .load(imageUri)
+                .into(selectedEventImageIv);
+    }
+
 
     private String getFormattedDateWithSuffix(int day, int month, int year) {
         // Get the month name in words
@@ -140,17 +176,27 @@ public class CreateEvent extends AppCompatActivity {
         String name = Objects.requireNonNull(createEventName.getText()).toString().trim();
         String description = Objects.requireNonNull(createEventDescription.getText()).toString().trim();
         String location = Objects.requireNonNull(createEventLocation.getText()).toString().trim();
-        String date = Objects.requireNonNull(createEventDate.getText()).toString().trim();
+        String date = Objects.requireNonNull(selectedEventDateTv.getText()).toString().trim();
         String priceString = Objects.requireNonNull(createEventPrice.getText()).toString().trim();
+        String time = Objects.requireNonNull(selectedEventTimeTv.getText()).toString().trim(); // Get selected time
 
         // Check if any field is empty
-        if (name.isEmpty() || description.isEmpty() || location.isEmpty() || date.isEmpty() || priceString.isEmpty() || imageUri == null) {
+        if (name.isEmpty() || description.isEmpty() || location.isEmpty() || date.isEmpty() || time.isEmpty() || priceString.isEmpty() || imageUri == null) {
             Toast.makeText(this, "Please fill in all fields and select an image", Toast.LENGTH_SHORT).show();
             return;
         }
 
         // Parse the price string to double
-        double price = Double.parseDouble(priceString);
+        double price;
+        try {
+            price = Double.parseDouble(priceString);
+        } catch (NumberFormatException e) {
+            Toast.makeText(this, "Invalid price format", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Retrieve the user ID from Firebase Authentication
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         // Create an event object and pass the image URI to the EventServices
         Event event = new Event(); // Assume you have an empty constructor in Event
@@ -160,11 +206,25 @@ public class CreateEvent extends AppCompatActivity {
         event.setEvent_location(location);
         event.setEvent_date(date);
         event.setEvent_ticket_price(price);
+        event.setUser_id(userId);
+        event.setEvent_time(time);
 
         // Use EventServices to create the event
         EventServices eventServices = new EventServices();
-        eventServices.createEvent(event, imageUri); // Pass the image URI along with the event
+        eventServices.createEvent(event, imageUri, new EventServices.EventCreationListener() {
+            @Override
+            public void onEventCreated() {
+                Toast.makeText(CreateEvent.this, "Event created successfully!", Toast.LENGTH_SHORT).show();
+                finish(); // Optionally, navigate back or clear the form
+            }
+
+            @Override
+            public void onEventCreationFailed(String errorMessage) {
+                Toast.makeText(CreateEvent.this, "Error: " + errorMessage, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
+
 
 
 

@@ -25,6 +25,7 @@
         android:id="@+id/backBtnMyProfileFragIV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="-24dp"
         android:layout_marginTop="24dp"
         android:src="@drawable/back"
         app:layout_constraintStart_toStartOf="@id/MyProfileGuideLine1"
@@ -44,12 +45,12 @@
         app:layout_constraintTop_toBottomOf="@id/backBtnMyProfileFragIV" />
 
     <TextView
-        android:id="@+id/FullNameMyProfileTV"
+        android:id="@+id/fullNameMyProfileTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:fontFamily="@font/airbnb_cereal_w_xbd"
-        android:text="Kevin Ngetich"
+        android:text="David Kevin"
         android:textColor="@color/black"
         android:textSize="24sp"
         app:layout_constraintEnd_toStartOf="@id/MyProfileGuideLine2"
@@ -66,7 +67,7 @@
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="@+id/followingLabelMyProfileFragTV"
         app:layout_constraintStart_toStartOf="@+id/followingLabelMyProfileFragTV"
-        app:layout_constraintTop_toBottomOf="@id/FullNameMyProfileTV" />
+        app:layout_constraintTop_toBottomOf="@id/fullNameMyProfileTV" />
 
     <TextView
         android:id="@+id/followingLabelMyProfileFragTV"
@@ -77,12 +78,13 @@
         android:fontFamily="@font/airbnb_cereal_w_bk"
         android:text="Following"
         android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="@+id/FullNameMyProfileTV"
+        app:layout_constraintStart_toStartOf="@+id/fullNameMyProfileTV"
         app:layout_constraintTop_toBottomOf="@id/followingNumberMyProfileTV" />
 
     <View
         android:id="@+id/divider"
         android:layout_width="2dp"
+        android:layout_height="0dp"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="4dp"
         android:background="?android:attr/listDivider"
@@ -114,7 +116,7 @@
         android:text="Followers"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/followingLabelMyProfileFragTV"
-        app:layout_constraintEnd_toEndOf="@+id/FullNameMyProfileTV"
+        app:layout_constraintEnd_toEndOf="@+id/fullNameMyProfileTV"
         app:layout_constraintTop_toTopOf="@+id/followingLabelMyProfileFragTV"
         app:layout_constraintVertical_bias="0.0" />
 

@@ -14,6 +14,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.eventbrite.Models.User;
+import com.example.eventbrite.Services.UserService;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -62,51 +64,48 @@ public class SignUp extends AppCompatActivity {
         }
     }
 
-    public void createUser (String email, String password, String fullName){
+    public void createUser(String email, String password, String fullName) {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
+                        FirebaseUser firebaseUser = mAuth.getCurrentUser();
+                        if (firebaseUser != null) {
+                            String userId = firebaseUser.getUid();
 
-                        //Update profile with full name
-                        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                                .setDisplayName(fullName)
-                                .build();
+                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                    .setDisplayName(fullName)
+                                    .build();
 
-                        if (mUser != null){
-                            mUser.updateProfile(profileUpdates)
+                            firebaseUser.updateProfile(profileUpdates)
                                     .addOnCompleteListener(profileTask -> {
-                                        if(profileTask.isSuccessful()){
+                                        if (profileTask.isSuccessful()) {
                                             Log.d("User Name Saving", "Full User Name Saved Correctly");
+                                            User user = new User(userId, fullName, email, "", null, null, "client");
+
+                                            UserService userService = new UserService();
+                                            userService.createUserProfile(user, success -> {
+                                                if (success) {
+                                                    Log.d("SignUp", "User profile created in database");
+                                                    Intent intent = new Intent(SignUp.this, Home.class);
+                                                    startActivity(intent);
+                                                    finish();
+                                                } else {
+                                                    Log.d("SignUp", "Failed to create user profile in database");
+                                                    Toast.makeText(SignUp.this, "Profile creation failed", Toast.LENGTH_LONG).show();
+                                                }
+                                            });
                                         }
                                     });
                         }
-
-                        Intent intent = new Intent(SignUp.this, Home.class);
-                        startActivity(intent);
-                        finish();
-
                     } else {
                         String errorMessage = "Registration Failed";
-
-                        // Check if task exception is not null and parse message
                         if (task.getException() != null) {
-                            String fullErrorMessage = task.getException().getMessage();
-
-                            // Extract the part inside square brackets []
-                            int start = fullErrorMessage.indexOf("[");
-                            int end = fullErrorMessage.indexOf("]");
-
-                            if (start != -1 && end != -1) {
-                                errorMessage = fullErrorMessage.substring(start + 1, end); // Get text inside []
-                            } else {
-                                errorMessage = fullErrorMessage; // Fallback to full message if brackets are not found
-                            }
+                            errorMessage = task.getException().getMessage();
                         }
-
-                        Log.w(TAG, "createUserWithEmail:failure", task.getException());
                         Toast.makeText(SignUp.this, errorMessage, Toast.LENGTH_LONG).show();
                     }
                 });
-
     }
+
+
 }

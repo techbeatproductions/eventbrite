@@ -57,11 +57,15 @@ public class AllFragmentsActivity extends AppCompatActivity {
         //Load the appropriate fragment
         if (fragmentToLoad != null){
             switch (fragmentToLoad){
+                case "OrganizerProfile":
+                    loadFragment(OrganizerProfileFragment.newInstance());
+                    break;
+
                 case "SpecificEvent":
                     loadFragment(event_details_full_Screen_fragment2.newInstance(selectedEvent));
                     break;
 
-                case "Profile":
+                case "MyProfile":
                     loadFragment(new MyProfileFullFragment());
                     break;
 

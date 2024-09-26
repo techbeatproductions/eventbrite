@@ -1,5 +1,7 @@
 package com.example.eventbrite;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +9,11 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.eventbrite.Models.User;
+import com.example.eventbrite.Services.UserService;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +30,8 @@ public class MyProfileFullFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private String userId;
+    private TextView userAboutText;
 
     public MyProfileFullFragment() {
         // Required empty public constructor
@@ -59,6 +68,39 @@ public class MyProfileFullFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my_profile_full, container, false);
+        View view = inflater.inflate(R.layout.fragment_my_profile_full, container, false);
+
+        userAboutText = (TextView) view.findViewById(R.id.aboutMeFullTextTV);
+
+        // Retrieve the user ID from SharedPreferences
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
+        userId = sharedPreferences.getString("userId", null);
+
+        // Fetch the user profile if userId is available
+        fetchUserProfile(userId);
+
+        return view;
     }
+
+    private void fetchUserProfile(String userId) {
+        if (userId != null) {
+            UserService userService = new UserService();
+            userService.fetchUserProfile(userId, new UserService.UserProfileCallback() {
+                @Override
+                public void onSuccess(User user) {
+                    // Update the UI with the user's information
+                    userAboutText.setText(user.getAbout());
+
+                }
+
+                @Override
+                public void onFailure(String errorMessage) {
+                    Toast.makeText(getContext(), "Error fetching profile: " + errorMessage, Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            Toast.makeText(getContext(), "User ID not found.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }
