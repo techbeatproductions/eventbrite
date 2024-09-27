@@ -11,6 +11,7 @@ public class User {
     private List<String> followers;
     private List<String> following;
     private String userType;
+    private String profileImage;
 
     public User(){
         this.followers = new ArrayList<>(); // Initialize to avoid null
@@ -26,6 +27,17 @@ public class User {
         this.followers = followers != null ? followers : new ArrayList<>(); // Avoid null
         this.following = following != null ? following : new ArrayList<>(); // Avoid null
         this.userType = userType;
+    }
+
+    public User(String userId, String name, String email, String about, List<String> followers, List<String> following, String userType, String profileImage) {
+        this.userId = userId;
+        this.name = name;
+        this.email = email;
+        this.about = about;
+        this.followers = followers;
+        this.following = following;
+        this.userType = userType;
+        this.profileImage = profileImage;
     }
 
     public String getUserId() {
@@ -82,5 +94,13 @@ public class User {
 
     public void setUserType(String userType) {
         this.userType = userType;
+    }
+
+    public String getProfileImage() {
+        return profileImage;
+    }
+
+    public void setProfileImage(String profileImage) {
+        this.profileImage = profileImage;
     }
 }

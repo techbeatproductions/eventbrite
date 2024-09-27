@@ -102,20 +102,9 @@
         app:layout_constraintStart_toEndOf="@+id/eventTagBtnRecyclerView"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/imageView9"
-            android:layout_width="16dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginTop="96dp"
-            android:layout_marginEnd="94dp"
-            android:elevation="3dp"
-            app:srcCompat="@drawable/filters"
-            app:tint="@color/white" />
-
         <Button
             android:id="@+id/filtersBtn"
-            android:layout_width="105dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:layout_marginTop="84dp"
@@ -123,7 +112,7 @@
             android:backgroundTint="@color/filter_btn_color"
             android:elevation="2dp"
             android:fontFamily="@font/airbnb_cereal_w_bk"
-            android:text="@string/filters"
+            android:text="Create Event"
             android:textAlignment="textEnd"
             android:textColor="@color/white"
             android:textSize="11sp"

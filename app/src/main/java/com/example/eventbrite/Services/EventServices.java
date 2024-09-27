@@ -90,7 +90,9 @@ public class EventServices {
         });
     }
 
-    public void fetchAllEvents(final OnEventsFetchedListener listener) {
+
+
+    public void fetchAllEvents(OnEventsFetchedListener listener) {
         databaseRef.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 DataSnapshot dataSnapshot = task.getResult();

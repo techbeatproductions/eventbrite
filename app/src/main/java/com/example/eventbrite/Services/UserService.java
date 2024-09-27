@@ -1,5 +1,9 @@
 package com.example.eventbrite.Services;
 
+import static android.content.ContentValues.TAG;
+
+import android.util.Log;
+
 import com.example.eventbrite.Models.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
@@ -9,7 +13,7 @@ import com.google.firebase.database.DatabaseError;
 import com.example.eventbrite.Services.UserProfileCallback;
 
 
-
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,20 +53,54 @@ public class UserService {
         getUserDatabaseReference(user.getUserId()).updateChildren(updates);
     }
 
+    // Add this method to UserService
+    public void updateUserAbout(String userId, String newAbout) {
+        Map<String, Object> updates = new HashMap<>();
+        updates.put("about", newAbout);
+        getUserDatabaseReference(userId).updateChildren(updates)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        // Successfully updated the about field
+                    } else {
+                        // Handle the error
+                    }
+                });
+    }
+
+    public void updateProfileImage(String userId, String imageUrl) {
+        getUserDatabaseReference(userId).child("profileImage").setValue(imageUrl)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Log.d(TAG, "Profile image updated successfully for userId: " + userId);
+                    } else {
+                        Log.e(TAG, "Error updating profile image for userId: " + userId);
+                    }
+                });
+    }
+
+
+
+
+
     //Method to follow another user
     public void followUser(User user, String targetUserId){
-        //Add target user to the 'following' list
+        //Add target user to the current user's 'following' list
         List<String> following = user.getFollowing();
         following.add(targetUserId);
         getUserDatabaseReference(user.getUserId()).child("following").setValue(following);
 
-        //Update target user's followers list
-        DatabaseReference targetUserRef = FirebaseDatabase.getInstance().getReference("Users").child(targetUserId);
+        // Update target user's followers list
+        DatabaseReference targetUserRef = getUserDatabaseReference(targetUserId);
         targetUserRef.child("followers").get().addOnCompleteListener(task -> {
-            List<String> targetUserFollowers = (List<String>) task.getResult().getValue();
-            if (targetUserFollowers != null) {
-                targetUserFollowers.add(user.getUserId());
-                targetUserRef.child("followers").setValue(targetUserFollowers);
+            if (task.isSuccessful()) {
+                List<String> targetUserFollowers = (List<String>) task.getResult().getValue();
+                if (targetUserFollowers == null) {
+                    targetUserFollowers = new ArrayList<>();
+                }
+                if (!targetUserFollowers.contains(user.getUserId())) {
+                    targetUserFollowers.add(user.getUserId());
+                    targetUserRef.child("followers").setValue(targetUserFollowers);
+                }
             }
         });
 
@@ -70,18 +108,22 @@ public class UserService {
 
     // Method to unfollow another user
     public void unfollowUser(User user, String targetUserId) {
-        // Remove target user from the 'following' list
+        // Remove target user from the current user's 'following' list
         List<String> following = user.getFollowing();
-        following.remove(targetUserId);
-        getUserDatabaseReference(user.getUserId()).child("following").setValue(following);
+        if (following.contains(targetUserId)) {
+            following.remove(targetUserId);
+            getUserDatabaseReference(user.getUserId()).child("following").setValue(following);
+        }
 
         // Update target user's followers list
-        DatabaseReference targetUserRef = FirebaseDatabase.getInstance().getReference("Users").child(targetUserId);
+        DatabaseReference targetUserRef = getUserDatabaseReference(targetUserId);
         targetUserRef.child("followers").get().addOnCompleteListener(task -> {
-            List<String> targetUserFollowers = (List<String>) task.getResult().getValue();
-            if (targetUserFollowers != null) {
-                targetUserFollowers.remove(user.getUserId());
-                targetUserRef.child("followers").setValue(targetUserFollowers);
+            if (task.isSuccessful()) {
+                List<String> targetUserFollowers = (List<String>) task.getResult().getValue();
+                if (targetUserFollowers != null && targetUserFollowers.contains(user.getUserId())) {
+                    targetUserFollowers.remove(user.getUserId());
+                    targetUserRef.child("followers").setValue(targetUserFollowers);
+                }
             }
         });
     }

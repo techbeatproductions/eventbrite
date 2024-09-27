@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".OrganizerProfileFragment">
 
     <androidx.constraintlayout.widget.Guideline
@@ -38,12 +39,12 @@
         android:elevation="2dp"
         android:importantForAccessibility="no"
         android:src="@drawable/follow"
-        app:layout_constraintBottom_toBottomOf="@+id/button3"
-        app:layout_constraintEnd_toStartOf="@+id/button3"
-        app:layout_constraintTop_toTopOf="@+id/button3" />
+        app:layout_constraintBottom_toBottomOf="@+id/followOrganizerBtn"
+        app:layout_constraintEnd_toStartOf="@+id/followOrganizerBtn"
+        app:layout_constraintTop_toTopOf="@+id/followOrganizerBtn" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/followOrganizerBtn"
         android:layout_width="154dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
@@ -54,26 +55,51 @@
         android:textColor="@color/white"
         android:textSize="12sp"
         app:cornerRadius="10dp"
-        app:layout_constraintEnd_toStartOf="@id/organizerProfileFragGuideLine2"
         app:layout_constraintStart_toEndOf="@id/organizerProfileFragGuideLine1"
         app:layout_constraintTop_toBottomOf="@id/fragmentContainerView4" />
 
+    <Button
+        android:id="@+id/editProfileOrganizerProfileBtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:background="@drawable/button_outline"
+        android:text="Edit Profile"
+        android:textColor="@color/eventbrite_card_blue"
+        app:layout_constraintBottom_toBottomOf="@id/followOrganizerBtn"
+        app:layout_constraintEnd_toStartOf="@id/organizerProfileFragGuideLine2"
+        app:layout_constraintStart_toEndOf="@id/followOrganizerBtn"
+        app:layout_constraintTop_toTopOf="@id/followOrganizerBtn" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/tabFragmentContainerView"
+        android:name="com.example.eventbrite.AboutFragment"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@id/organizerProfileFragGuideLine2"
+        app:layout_constraintStart_toStartOf="@id/organizerProfileFragGuideLine1"
+        app:layout_constraintTop_toBottomOf="@id/tabLayoutOrganizerProfile" />
+
     <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayoutOrganizerProfile"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
+        android:background="@android:color/transparent"
         app:layout_constraintEnd_toStartOf="@id/organizerProfileFragGuideLine2"
         app:layout_constraintStart_toEndOf="@id/organizerProfileFragGuideLine1"
-        app:layout_constraintTop_toBottomOf="@id/button3"
+        app:layout_constraintTop_toBottomOf="@id/followOrganizerBtn"
         app:tabIndicatorColor="@color/eventbrite_card_blue"
         app:tabSelectedTextColor="@color/eventbrite_card_blue">
 
         <com.google.android.material.tabs.TabItem
+            android:id="@+id/aboutTab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/about" />
 
         <com.google.android.material.tabs.TabItem
+            android:id="@+id/eventsTab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/events" />

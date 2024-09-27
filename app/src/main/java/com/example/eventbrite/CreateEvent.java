@@ -215,6 +215,12 @@ public class CreateEvent extends AppCompatActivity {
             @Override
             public void onEventCreated() {
                 Toast.makeText(CreateEvent.this, "Event created successfully!", Toast.LENGTH_SHORT).show();
+
+                // Navigate back to Home activity
+                Intent intent = new Intent(CreateEvent.this, Home.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK); // Clear the back stack
+                startActivity(intent);
+
                 finish(); // Optionally, navigate back or clear the form
             }
 

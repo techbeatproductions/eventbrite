@@ -69,15 +69,33 @@
     <TextView
         android:id="@+id/aboutMeFullTextTV"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
-        android:layout_marginBottom="50dp"
         android:fontFamily="@font/airbnb_cereal_w_bk"
         android:text="@string/about_me_full_text"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/MyProfileGuideLine2"
         app:layout_constraintStart_toStartOf="@id/MyProfileFullGuideLine1"
         app:layout_constraintTop_toBottomOf="@id/aboutMeLabelMyProfileFullFragTV" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/aboutMeTextInputLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toStartOf="@id/MyProfileGuideLine2"
+        app:layout_constraintStart_toStartOf="@id/MyProfileFullGuideLine1"
+        app:layout_constraintTop_toBottomOf="@id/aboutMeFullTextTV">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/AboutMeTextInputEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/airbnb_cereal_w_lt"
+            android:hint="About You Description"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

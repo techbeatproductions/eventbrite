@@ -5,6 +5,6 @@ import com.example.eventbrite.Models.Event;
 import java.util.List;
 
 public interface OnEventsFetchedListener {
-    void onEventsFetched(List<Event> eventList);
+    void onEventsFetched(List<Event> events);
     void onEventsFetchFailed(String errorMessage);
 }

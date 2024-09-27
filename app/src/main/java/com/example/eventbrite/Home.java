@@ -9,8 +9,11 @@ import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -31,6 +34,10 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,6 +98,42 @@ public class Home extends AppCompatActivity implements OnEventsFetchedListener, 
         EventServices eventServices = new EventServices();
         eventServices.fetchAllEvents(this);
 
+        // Initialize the filters button
+        Button filtersBtn = findViewById(R.id.filtersBtn);
+
+        // Set up the onClickListener for the filters button
+        filtersBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(Home.this, CreateEvent.class);
+            startActivity(intent);
+        });
+
+        // Check if user is authenticated
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        if (auth.getCurrentUser() != null) {
+            // Fetch userType from Firebase Database
+            String userId = auth.getCurrentUser().getUid();
+            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(userId);
+
+            userRef.child("userType").get().addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    String userType = task.getResult().getValue(String.class);
+                    // Set visibility of filtersBtn based on userType
+                    if ("client".equals(userType)) {
+                        filtersBtn.setVisibility(View.GONE); // Make it invisible for clients
+                    } else if ("organizer".equals(userType)) {
+                        filtersBtn.setVisibility(View.VISIBLE); // Make it visible for organizers
+                    }
+                } else {
+                    // Handle error in case fetching the userType fails
+                    Toast.makeText(Home.this, "Error fetching user type.", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            // User is not authenticated, handle accordingly
+            filtersBtn.setVisibility(View.GONE); // Optionally hide the button if the user is not logged in
+        }
+
+
         homeSearchView.setOnClickListener(v -> NavigateToSearchView());
         seeAllTV.setOnClickListener(v -> NavigateToSeeAllEvents());
 
@@ -107,27 +150,53 @@ public class Home extends AppCompatActivity implements OnEventsFetchedListener, 
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.explore) {
-                // Navigate to Explore Activity or Fragment
-                startActivity(new Intent(Home.this, Home.class)); // This seems to be the same activity, you might want to change it
+                startActivity(new Intent(Home.this, Home.class));
                 return true;
             } else if (item.getItemId() == R.id.events) {
-                // Navigate to AllFragmentsActivity and load SeeAllEventsFragment
                 Intent eventsIntent = new Intent(Home.this, AllFragmentsActivity.class);
                 eventsIntent.putExtra("fetchedEventList", new ArrayList<>(fetchedEventList));
                 eventsIntent.putExtra("fragmentToLoad", "SeeAllEvents");
                 startActivity(eventsIntent);
                 return true;
             } else if (item.getItemId() == R.id.profile) {
-                // Navigate to AllFragmentsActivity and load MyProfileFullFragment
-                Intent profileIntent = new Intent(Home.this, AllFragmentsActivity.class);
-                profileIntent.putExtra("fetchedEventList", new ArrayList<>(fetchedEventList));
-                profileIntent.putExtra("fragmentToLoad", "MyProfile");
-                startActivity(profileIntent);
+                // Fetch userType from Firebase Database
+                String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(userId);
+
+                userRef.child("userType").get().addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        String userType = task.getResult().getValue(String.class);
+
+                        // Navigate based on userType
+                        Intent profileIntent = new Intent(Home.this, AllFragmentsActivity.class);
+                        profileIntent.putExtra("fetchedEventList", new ArrayList<>(fetchedEventList));
+                        if ("client".equals(userType)) {
+                            profileIntent.putExtra("fragmentToLoad", "MyProfile");
+                        } else if ("organizer".equals(userType)) {
+                            profileIntent.putExtra("fragmentToLoad", "OrganizerProfile");
+                        }
+                        startActivity(profileIntent);
+                    } else {
+                        // Handle error in case fetching the userType fails
+                        Toast.makeText(Home.this, "Error fetching user type.", Toast.LENGTH_SHORT).show();
+                    }
+                });
                 return true;
             }
 
             return false; // Return false if no item matched
         });
+
+        ImageView notificationsIV = findViewById(R.id.notificationsIV);
+        notificationsIV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Home.this, AllFragmentsActivity.class);
+                intent.putExtra("fragmentToLoad", "Notifications"); // Pass the identifier
+                startActivity(intent);
+            }
+        });
+
 
     }
 

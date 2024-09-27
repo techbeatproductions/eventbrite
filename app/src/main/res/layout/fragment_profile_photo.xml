@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainProfilePhotoConstraintLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".ProfilePhotoFragment">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/ProfilePhotoGuideLine1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="24dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/ProfilePhotoGuideLine2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="24dp" />
+
+    <ImageView
+        android:id="@+id/backBtnProfilePhotoIV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:src="@drawable/back"
+        app:layout_constraintStart_toEndOf="@id/ProfilePhotoGuideLine1"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/profilePhotoScreenNameTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/airbnb_cereal_w_xbd"
+        android:text="Profile Photo"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/backBtnProfilePhotoIV"
+        app:layout_constraintEnd_toStartOf="@id/changeProfilePhotoIV"
+        app:layout_constraintStart_toEndOf="@id/backBtnProfilePhotoIV"
+        app:layout_constraintTop_toTopOf="@+id/backBtnProfilePhotoIV" />
+
+    <ImageView
+        android:id="@+id/changeProfilePhotoIV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/edit_profile"
+        app:layout_constraintBottom_toBottomOf="@+id/profilePhotoScreenNameTV"
+        app:layout_constraintEnd_toStartOf="@id/ProfilePhotoGuideLine2"
+        app:layout_constraintTop_toTopOf="@+id/profilePhotoScreenNameTV" />
+
+    <ImageView
+        android:id="@+id/actualProfilePhotoIV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/backBtnProfilePhotoIV"
+        tools:src="@tools:sample/avatars" />
+</androidx.constraintlayout.widget.ConstraintLayout>

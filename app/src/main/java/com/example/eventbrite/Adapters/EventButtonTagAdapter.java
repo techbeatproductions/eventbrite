@@ -31,9 +31,8 @@ public class EventButtonTagAdapter extends RecyclerView.Adapter<EventButtonTagAd
     private final int[] colors = {
 
             Color.parseColor("#F0635A"), // Custom color
-            Color.parseColor("#F59762"), // Custom color
-            Color.parseColor("#29D697"), // Custom color
-            Color.parseColor("#46CDFB")  // Custom color
+            Color.parseColor("#F6A1A0"), // Custom color
+            Color.parseColor("#C94D4B")  // Custom color
     };
 
     private int lastUsedColor = -1;
@@ -54,8 +53,8 @@ public class EventButtonTagAdapter extends RecyclerView.Adapter<EventButtonTagAd
         String tag = uniqueTagsList.get(position);
         holder.tagButton.setText(tag);
 
-        // Set a random color from the predefined color array
-        holder.tagButton.setBackgroundColor(getRandomColorFromSet());
+        // Set a color based on the position to create a cycling effect
+        holder.tagButton.setBackgroundColor(colors[position % colors.length]);
 
         // On click listener for the button
         holder.tagButton.setOnClickListener(v -> eventTagButtonClicked(tag));

@@ -58,6 +58,19 @@
         app:layout_constraintTop_toBottomOf="@id/profilePhotoMyProfileIV" />
 
     <TextView
+        android:id="@+id/changeProfilemageTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/airbnb_cereal_w_xbd"
+        android:text="Click Image To Change Profile Image"
+        android:textColor="@color/black"
+        android:textSize="8sp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toStartOf="@+id/MyProfileGuideLine2"
+        app:layout_constraintStart_toStartOf="@+id/MyProfileGuideLine1"
+        app:layout_constraintTop_toBottomOf="@+id/profilePhotoMyProfileIV" />
+
+    <TextView
         android:id="@+id/followingNumberMyProfileTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

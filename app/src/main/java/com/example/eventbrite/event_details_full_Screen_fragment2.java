@@ -1,8 +1,10 @@
 package com.example.eventbrite;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -16,6 +18,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.eventbrite.Models.Event;
+import com.example.eventbrite.Models.Notification;
+import com.example.eventbrite.Models.User;
+import com.example.eventbrite.Services.NotificationService;
+import com.example.eventbrite.Services.UserService;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -36,13 +43,14 @@ public class event_details_full_Screen_fragment2 extends Fragment {
 
     TextView eventNameInEventDetails,actualEventDateInEventDetails, actualEventMainLocation, actualEventDetailedLocationInEventDetails, eventDescriptionInEventDetailsFrag, actualEventTimeInEventDetailsTV, actualEventOrganizerNameInEventDetailsTV, actualEventOrganizerRoleInEventDetailsFragTV;
     ImageView eventImageIV, backBtnIV;
-    Button buyEventTicketBtnInEventDetailsFrag;
+    Button buyEventTicketBtnInEventDetailsFrag, followEventOrganizerBtn;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private static final String ARG_EVENT = "event";
     private Event event;
+    private User currentUser;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -107,11 +115,15 @@ public class event_details_full_Screen_fragment2 extends Fragment {
         actualEventTimeInEventDetailsTV = (TextView) view.findViewById(R.id.actualEventTimeInEventDetailsTV);
         actualEventOrganizerNameInEventDetailsTV = (TextView) view.findViewById(R.id.actualEventOrganizerNameInEventDetailsTV);
         actualEventOrganizerRoleInEventDetailsFragTV = (TextView) view.findViewById(R.id.actualEventOrganizerRoleInEventDetailsFragTV);
+        followEventOrganizerBtn = (Button) view.findViewById(R.id.followEventOrganizerInEventDetailsFragBtn); 
 
 
-        
+        //Set button click listener
         backBtnIV.setOnClickListener(v -> navigateBack());
+        followEventOrganizerBtn.setOnClickListener(v -> toggleFollowEventOrganizer());
 
+        //Fetch current user data
+        fetchCurrentUser();
 
 
         //Set the data to views if event is not null
@@ -141,6 +153,82 @@ public class event_details_full_Screen_fragment2 extends Fragment {
 
         return view;
     }
+
+    private void fetchCurrentUser() {
+        // Implement a method to get the current user, e.g. from SharedPreferences or Firebase
+        // For example, using Firebase:
+        String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        UserService userService = new UserService();
+        userService.fetchUserProfile(currentUserId, new UserService.UserProfileCallback() {
+            @Override
+            public void onSuccess(User user) {
+                currentUser = user;
+                checkIfFollowing(); // Check if the current user is following the event organizer
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+                // Handle failure
+            }
+        });
+    }
+
+    private void checkIfFollowing() {
+        if (currentUser != null && event != null) {
+            if (currentUser.getFollowing().contains(event.getUser_id())) {
+                // User is following the organizer
+                followEventOrganizerBtn.setText("Unfollow");
+                followEventOrganizerBtn.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.button_bg_color_2));
+            } else {
+                // User is not following the organizer
+                followEventOrganizerBtn.setText("Follow");
+                followEventOrganizerBtn.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.eventbrite_card_blue));
+            }
+            followEventOrganizerBtn.setTextColor(Color.BLACK); // Set text color to white
+        }
+    }
+
+    private void toggleFollowEventOrganizer() {
+        if (currentUser != null && event != null) {
+            UserService userService = new UserService();
+            NotificationService notificationService = new NotificationService();
+            String organizerId = event.getUser_id(); // Get the organizer ID
+
+            if (currentUser.getFollowing().contains(organizerId)) {
+                // Unfollow
+                userService.unfollowUser(currentUser, organizerId);
+                followEventOrganizerBtn.setText("Follow");
+                followEventOrganizerBtn.setTextColor(Color.BLACK);
+                followEventOrganizerBtn.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.eventbrite_card_blue));
+
+                // Create a notification for unfollow
+                notificationService.createNotification(
+                        organizerId, // Recipient
+                        currentUser.getUserId(), // Actor
+                        currentUser.getName(), // Actor Name
+                        "unfollow", // Type
+                        null // Event Name (not applicable for unfollow)
+                );
+            } else {
+                // Follow
+                userService.followUser(currentUser, organizerId);
+                followEventOrganizerBtn.setText("Unfollow");
+                followEventOrganizerBtn.setTextColor(Color.BLACK);
+                followEventOrganizerBtn.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.button_bg_color_2));
+
+                // Create a notification for follow
+                notificationService.createNotification(
+                        organizerId, // Recipient
+                        currentUser.getUserId(), // Actor
+                        currentUser.getName(), // Actor Name
+                        "follow", // Type
+                        null // Event Name (not applicable for follow)
+                );
+            }
+        }
+    }
+
+
 
     private String getFormattedDateWithDay(String eventDate) {
         // Remove suffix from the day (th, st, nd, rd)
@@ -243,4 +331,6 @@ public class event_details_full_Screen_fragment2 extends Fragment {
         requireActivity().finish();
 
     }
+
+
 }
