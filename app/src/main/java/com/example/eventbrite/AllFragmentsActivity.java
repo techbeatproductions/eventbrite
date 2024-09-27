@@ -53,6 +53,7 @@ public class AllFragmentsActivity extends AppCompatActivity {
 
         // Retrieve the identifier of the fragment to load
         String fragmentToLoad = getIntent().getStringExtra("fragmentToLoad");
+        String userId = getIntent().getStringExtra("userId");
 
         // Load the appropriate fragment
         if (fragmentToLoad != null) {
@@ -68,7 +69,11 @@ public class AllFragmentsActivity extends AppCompatActivity {
                     break;
 
                 case "OrganizerProfile":
-                    loadFragment(new OrganizerProfileFragment());
+                    if (userId != null) {
+                        loadFragment(OrganizerProfileFragment.newInstance(userId, passedEventListFromHomeActivity)); // Pass the user ID to the fragment
+                    } else {
+                        Log.e(TAG, "User ID is null for OrganizerProfile"); // Log an error if userId is null
+                    }
                     break;
 
                 case "SpecificEvent":
@@ -80,7 +85,7 @@ public class AllFragmentsActivity extends AppCompatActivity {
                     break;
 
                 case "SeeAllEvents":
-                    loadFragment(SeeAllEventsFragment.newInstance(passedEventListFromHomeActivity));
+                    loadFragment(SeeAllEventsFragment.newInstance(passedEventListFromHomeActivity, true));
                     break;
 
                 case "SearchFragment":

@@ -2,6 +2,7 @@ package com.example.eventbrite.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ public class EventCardSearchViewItemAdapter extends RecyclerView.Adapter<EventCa
     public EventCardSearchViewItemAdapter(ArrayList<Event> eventCardSearchViewEventList,Context context) {
         this.eventCardSearchViewEventList = eventCardSearchViewEventList;
         this.context =context;
+        Log.d("EventCardAdapter", "Adapter initialized with event list size: " + eventCardSearchViewEventList.size());
     }
 
     @NonNull
@@ -40,6 +42,12 @@ public class EventCardSearchViewItemAdapter extends RecyclerView.Adapter<EventCa
     public void onBindViewHolder(@NonNull EventCardSearchViewItemAdapter.EventCardSearchViewItemViewHolder holder, int position) {
         Event event = eventCardSearchViewEventList.get(position);
         String concatenateEventDateTime = event.getEvent_date();
+
+        // Logging for debugging
+        Log.d("EventCardAdapter", "Binding event: " + event.getEvent_name() + " at position " + position);
+        Log.d("EventCardAdapter", "Event name: " + event.getEvent_name());
+        Log.d("EventCardAdapter", "Event date: " + concatenateEventDateTime);
+        Log.d("EventCardAdapter", "Event image URL: " + event.getEvent_image());
 
 
         //Set text views
@@ -68,8 +76,9 @@ public class EventCardSearchViewItemAdapter extends RecyclerView.Adapter<EventCa
 
     @Override
     public int getItemCount() {
-        return eventCardSearchViewEventList.size();
+        return eventCardSearchViewEventList != null ? eventCardSearchViewEventList.size() : 0;
     }
+
 
     public static class EventCardSearchViewItemViewHolder extends RecyclerView.ViewHolder {
         ImageView eventImageInEventCardSearchView;

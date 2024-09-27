@@ -170,6 +170,7 @@ public class Home extends AppCompatActivity implements OnEventsFetchedListener, 
                         // Navigate based on userType
                         Intent profileIntent = new Intent(Home.this, AllFragmentsActivity.class);
                         profileIntent.putExtra("fetchedEventList", new ArrayList<>(fetchedEventList));
+                        profileIntent.putExtra("userId", userId);
                         if ("client".equals(userType)) {
                             profileIntent.putExtra("fragmentToLoad", "MyProfile");
                         } else if ("organizer".equals(userType)) {
